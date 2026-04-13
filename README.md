@@ -1,5 +1,5 @@
 # doubleM-musica-e-moda
-Repósitório do meu projeto individual que aborda a relação da música com a moda, com foco maior no gênero musical Trap
+Repositório do meu projeto individual que aborda a relação da música com a moda, com foco maior no gênero musical Trap
 
 Nesse site você entenderá a evolução da moda com a influência da música, e qual a importância da forma que você se veste em relação a o que você quer comunicar.
 

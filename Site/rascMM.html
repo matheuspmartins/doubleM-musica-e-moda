@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        background-color: black;
+        font-family: serif;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    nav{
+        padding: 10px;
+        margin-bottom: 10px;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    button {
+        font-size: larger;
+        padding: 10px;
+        border-width: 0px;
+    }
+
+    button:hover {
+        transform: scale(1.1);
+        transition: all 0.5s;
+    }
+
+    .home {
+        border-radius: 0px;
+        background-color: orangered;
+        color: black;
+    }
+
+    .quest {
+        border-radius: 30px;
+        background-color: rgb(50, 112, 50);
+        color: black;
+    }
+
+    .trap {
+        border-radius: 10px;
+        background-color: rgb(101, 188, 228);
+        color: black;
+    }
+
+    .perfil {
+        width: auto;
+        background-image: url(https://cdn-icons-png.flaticon.com/512/6522/6522516.png);
+    }
+
+    .video-container {
+        background-color: rgba(0, 0, 0, 0.514);
+  position: relative;
+  width: 100%;
+  height: 700px; 
+  overflow: hidden;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-direction: column;
+}
+
+    h1 {
+        font-size:80px;
+        margin-bottom: 8dvb;
+        color: rgb(255, 255, 255);
+        opacity: 0.8;
+    }
+
+.video-container video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+}
+</style>
+<body>
+    <header>
+        <img src="" alt="">
+    </header>
+    <nav>
+        <button class="home">HOME</button>
+        <button class="quest">QUESTIONÁRIO</button>
+        <button class="trap">TRAP</button>
+        <div class="perfil"></div>
+    </nav>
+
+    <div class="video-container">
+        <h1 id="titulo">doubleM - A Música e a Moda</h1>
+        <video autoplay muted loop>
+        <source src="11364-229874120_medium.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+</body>
+<script>
+
+scrollTo({
+  top: 200,
+  left: 200,
+  behavior: "smooth",
+});
+
+</script>
+</html>

@@ -1,127 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>doubleM - Moda & Música</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-    body {
-        margin: 0;
-        background-color: black;
-        font-family: serif;
-    }
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    nav{
-        padding: 10px;
-        margin-bottom: 10px;
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-    }
-
-    button {
-        font-size: larger;
-        padding: 10px;
-        border-width: 0px;
-    }
-
-    button:hover {
-        transform: scale(1.1);
-        transition: all 0.5s;
-    }
-
-    .home {
-        border-radius: 0px;
-        background-color: orangered;
-        color: black;
-    }
-
-    .quest {
-        border-radius: 30px;
-        background-color: rgb(50, 112, 50);
-        color: black;
-    }
-
-    .trap {
-        border-radius: 10px;
-        background-color: rgb(101, 188, 228);
-        color: black;
-    }
-
-    .perfil {
-        width: auto;
-        background-image: url(https://cdn-icons-png.flaticon.com/512/6522/6522516.png);
-    }
-
-    .video-container {
-        background-color: rgba(0, 0, 0, 0.514);
-  position: relative;
-  width: 100%;
-  height: 700px; 
-  overflow: hidden;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-direction: column;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-    h1 {
-        font-size:80px;
-        margin-bottom: 8dvb;
-        color: rgb(255, 255, 255);
-        opacity: 0.8;
-    }
+body {
+    background-color: black;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+/* NAV */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
+}
+
+button {
+    font-size: 14px;
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.home { background: orangered; }
+.quest { background: #2f6f2f; }
+.trap { background: #65bce4; }
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.video-container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
 
 .video-container video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+
+.hero-content {
+    z-index: 2;
+}
+
+h1 {
+    font-size: 70px;
+    font-family: 'Playfair Display', serif;
+}
+
+.hero-content p {
+    margin-top: 15px;
+    font-size: 18px;
+    opacity: 0.8;
+}
+
+.section-dark {
+    padding: 80px 10%;
+    text-align: center;
+}
+
+.section-dark h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+}
+
+.section-dark p {
+    max-width: 700px;
+    margin: auto;
+    opacity: 0.7;
+    line-height: 1.6;
+}
+
+.section-white {
+    background: white;
+    color: black;
+    padding: 80px 10%;
+    text-align: center;
+}
+
+.section-white h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+}
+
+.section-white p {
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.6;
+}
+
+.grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    gap: 20px;
+}
+
+.card {
+    padding: 30px;
+    background: #111;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.section-white .card {
+    background: #f3f3f3;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: black;
+    opacity: 0.6;
 }
 </style>
-<body>
-    <header>
-        <img src="" alt="">
-    </header>
-    <nav>
-        <button class="home">HOME</button>
-        <button class="quest">QUESTIONÁRIO</button>
-        <button class="trap">TRAP</button>
-        <div class="perfil"></div>
-    </nav>
+</head>
 
-    <div class="video-container">
-        <h1 id="titulo">doubleM - A Música e a Moda</h1>
-        <video autoplay muted loop>
-        <source src="11364-229874120_medium.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+<body>
+
+<nav>
+    <button class="home">HOME</button>
+    <button class="quest">QUESTIONÁRIO</button>
+    <button class="trap">TRAP</button>
+</nav>
+
+<div class="video-container">
+    <div class="hero-content">
+        <h1>doubleM</h1>
+        <p>Onde a música encontra a identidade da moda</p>
     </div>
 
+    <video autoplay muted loop>
+        <source src="cclipe_musical_costabilekidd.mp4" type="video/mp4">
+    </video>
+</div>
+
+<section class="section-dark">
+    <h2>TITULO</h2>
+    <p>
+        Falar sobre o objtivo do site e apresentar o conceito de musica e moda
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Moda</h3>
+            <p>Aprofundar-se na importancia dda moda de forma breva</p>
+        </div>
+
+        <div class="card">
+            <h3>Música</h3>
+            <p>Aprofundar-se na importancia da musica de forma breve</p>
+        </div>
+
+        <div class="card">
+            <h3>Trap</h3>
+            <p>Explicar como o sub-genero faz essa junção influente de forma quase instantanea</p>
+        </div>
+    </div>
+</section>
+
+<section class="section-white">
+    <h2>Veja Um Pouco de Cada Gênero</h2>
+    <p>
+        Escolha seu estilo musical favorito e veja que tipo de pessoa você provavelmente é e qual a sua forma de se vestir
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Rock</h3>
+            <p>Texto</p>
+        </div>
+
+        <div class="card">
+            <h3>Pop Internacional</h3>
+            <p>Texto</p>
+        </div>
+
+        <div class="card">
+            <h3>Samba</h3>
+            <p>Texto</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    Feito por Matheus de Paula Martins
+</footer>
+
 </body>
-<script>
-
-scrollTo({
-  top: 200,
-  left: 200,
-  behavior: "smooth",
-});
-
-</script>
 </html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>doubleM | Cadastro</title>
+
+<script src="./js/sessao.js"></script>
+<link rel="stylesheet" href="css/cadastro.css">
+
+<link rel="icon" href="./assets/icon/favicon2.ico" />
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body onload="listar()">
+
+<div class="header">
+    <div class="container">
+        <h1 class="titulo">doubleM</h1>
+        <ul class="navbar">
+            <li><a href="index.html">Inicial</a></li>
+            <li>|</li>
+            <li><a href="login.html">Login</a></li>
+            <li class="agora"><a href="#">Cadastro</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="login">
+    <div class="alerta_erro">
+        <div class="card_erro" id="cardErro">
+            <span id="mensagem_erro"></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card card-cadastro">
+            <h2>Bem-vindo!</h2>
+
+            <div class="formulario">
+                <div class="campo">
+                    <span>Nome:</span>
+                    <input id="nome_input" type="text" placeholder="Seu nome" />
+                </div>
+
+                <div class="campo">
+                    <span>E-mail:</span>
+                    <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
+                </div>
+
+                <div class="campo">
+                    <span>Informe Seu Gênero Musical Favorito:</span>
+                    <input id="genMus_input" type="text" placeholder="Samba" />
+                </div>
+
+                <div class="campo">
+                    <span>Senha:</span>
+                    <input id="senha_input" type="password" placeholder="******" />
+                </div>
+
+                <div class="campo">
+                    <span>Confirmação da Senha:</span>
+                    <input id="confirmacao_senha_input" type="password" placeholder="******" />
+                </div>
+
+                <button class="botao" onclick="cadastrar()">Cadastrar</button>
+            </div>
+
+            <div id="div_aguardar" class="loading-div">
+                <img src="./assets/circle-loading.gif" />
+            </div>
+
+            <div id="div_erros_login"></div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <h4>2026 doubleM — Moda & Música</h4>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+
+let listaEmpresasCadastradas = [];
+
+function cadastrar() {
+    var nomeVar = nome_input.value;
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
+    var confirmacaoSenhaVar = confirmacao_senha_input.value;
+    var generoMusical = genMus_input.value;
+
+    if (
+        nomeVar == "" ||
+        emailVar == "" ||
+        senhaVar == "" ||
+        confirmacaoSenhaVar == "" ||
+        generoMusical == ""
+    ) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+        return false;
+    } else {
+        setInterval(sumirMensagem, 5000);
+    }
+    var contadorLetras = 0;
+
+    for (var i = 0; i < nomeVar.length; i++) {
+        if (nomeVar[i] != " ") {
+            contadorLetras++;
+        }
+    }
+
+    if (contadorLetras < 2) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Nome inválido! Digite pelo menos 2 letras.";
+        return false;
+    }
+
+    var temArroba = false;
+    var temPonto = false;
+
+    for (var i = 0; i < emailVar.length; i++) {
+        if (emailVar[i] == "@") {
+            temArroba = true;
+        }
+        if (emailVar[i] == ".") {
+            temPonto = true;
+        }
+    }
+
+    if (!temArroba || !temPonto) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "E-mail inválido!";
+        return false;
+    }
+
+    var temNumero = false;
+    var temMaiuscula = false;
+
+    for (var i = 0; i < senhaVar.length; i++) {
+        var caractere = senhaVar[i];
+
+        if (caractere >= '0' && caractere <= '9') {
+            temNumero = true;
+        }
+
+        if (caractere >= 'A' && caractere <= 'Z') {
+            temMaiuscula = true;
+        }
+    }
+
+    if (senhaVar.length < 6 || !temNumero || !temMaiuscula) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Senha inválida! Use pelo menos 6 caracteres, 1 número e 1 letra maiúscula.";
+        return false;
+    }
+
+    if (senhaVar != confirmacaoSenhaVar) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "As senhas não coincidem!";
+        return false;
+    }
+
+    fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nomeServer: nomeVar,
+            emailServer: emailVar,
+            senhaServer: senhaVar,
+            generoMusicalServer: generoMusical
+        }),
+    })
+    .then(function (resposta) {
+        if (resposta.ok) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando...";
+            setTimeout(() => {
+                window.location = "login.html";
+            }, 2000);
+        } else {
+            throw "Erro ao cadastrar";
+        }
+    })
+    .catch(function (erro) {
+        console.log(erro);
+    });
+
+    return false;
+}
+
+function sumirMensagem() {
+    cardErro.style.display = "none";
+}
+</script>

@@ -1,3 +1,4 @@
+const { buscarAquariosPorUsuario } = require("../controllers/questionarioController");
 var database = require("../database/config");
 
 function buscarAquariosPorEmpresa(id) {
@@ -18,6 +19,6 @@ function cadastrar(id, descricao) {
 
 
 module.exports = {
-  buscarAquariosPorEmpresa,
+  buscarAquariosPorUsuario,
   cadastrar
 }

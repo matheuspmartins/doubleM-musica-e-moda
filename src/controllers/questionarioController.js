@@ -1,9 +1,9 @@
-var aquarioModel = require("../models/aquarioModel");
+var aquarioModel = require("../models/questionarioModel");
 
-function buscarAquariosPorEmpresa(req, res) {
+function buscarAquariosPorUsuario(req, res) {
   var idUsuario = req.params.idUsuario;
 
-  aquarioModel.buscarAquariosPorEmpresa(idUsuario).then((resultado) => {
+  questionarioModel.buscarAquariosPorUsuario(idUsuario).then((resultado) => {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
@@ -11,20 +11,20 @@ function buscarAquariosPorEmpresa(req, res) {
     }
   }).catch(function (erro) {
     console.log(erro);
-    console.log("Houve um erro ao buscar os aquarios: ", erro.sqlMessage);
+    console.log("Houve um erro ao buscar os questionarios: ", erro.sqlMessage);
     res.status(500).json(erro.sqlMessage);
   });
 }
 
 
 function cadastrar(req, res) {
-  var descricao = req.body.descricao;
-  var idUsuario = req.body.idUsuario;
+  var descricao = req.body.perfilResultadoServer;
+  var idUsuario = req.body.fkUsuarioServer;
 
   if (descricao == undefined) {
-    res.status(400).send("descricao está undefined!");
+    res.status(400).send("perfilResultado está undefined!");
   } else if (idUsuario == undefined) {
-    res.status(400).send("idUsuario está undefined!");
+    res.status(400).send("fkUsuario está undefined!");
   } else {
 
 
@@ -44,6 +44,6 @@ function cadastrar(req, res) {
 }
 
 module.exports = {
-  buscarAquariosPorEmpresa,
+  buscarAquariosPorUsuario,
   cadastrar
 }

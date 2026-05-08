@@ -18,17 +18,22 @@
 
 <body onload="listar()">
 
-<div class="header">
-    <div class="container">
-        <h1 class="titulo">doubleM</h1>
-        <ul class="navbar">
-            <li><a href="index.html">Inicial</a></li>
-            <li>|</li>
-            <li><a href="login.html">Login</a></li>
-            <li class="agora"><a href="#">Cadastro</a></li>
-        </ul>
+<nav>
+    <div class="nav-left">
+        doubleM
     </div>
-</div>
+
+    <div class="nav-center">
+        <button class="home">HOME</button>
+        <button class="quest">QUESTIONÁRIO</button>
+        <button class="trap">TRAP</button>
+    </div>
+
+    <div class="nav-right">
+        <button class="login" onclick="window.location.href='login.html'">Login</button>
+        <button class="cadastro" onclick="window.location.href='cadastro.html'">Cadastro</button>
+    </div>
+</nav>
 
 <div class="login">
     <div class="alerta_erro">

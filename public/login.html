@@ -231,7 +231,7 @@ button:hover {
 
 <div class="footer">
     <div class="container">
-        <h4>© 2026 doubleM — Moda & Música</h4>
+        <h4>2026 doubleM — Moda & Música</h4>
     </div>
 </div>
 
@@ -239,7 +239,6 @@ button:hover {
 </html>
 
 <script>
-// SEU JS ORIGINAL (não alterado)
 
 function entrar() {
     aguardar();
@@ -271,6 +270,7 @@ function entrar() {
             resposta.json().then(json => {
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.NOME_USUARIO = json.nome;
+                sessionStorage.GENERO_MUSICAL_USUARIO = json.generoMusical;
                 sessionStorage.ID_USUARIO = json.id;
 
                 setTimeout(function () {

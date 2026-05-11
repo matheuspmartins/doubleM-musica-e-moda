@@ -5,162 +5,359 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>doubleM | Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    margin: 0;
-}
-
-.header {
-    background: #7c3aed;
-    color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.container {
-    padding: 20px;
-}
-
-.cards {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.card {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    flex: 1;
-    text-align: center;
-}
-
-/* GRAFICOS */
-.graficos {
-    display: flex;
-    gap: 20px;
-}
-
-.grafico {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    flex: 1;
-}
-</style>
+<link rel="stylesheet" href="dashStyle.css">
 </head>
 
 <body>
 
-<div class="header">
-    <h2>Dashboard</h2>
-    <span id="span_email">usuario@email.com</span>
-</div>
-
-<div class="container">
-
-    <div class="cards">
-        <div class="card">
-            <h3>Respondentes</h3>
-            <p>1248</p>
-        </div>
-
-        <div class="card">
-            <h3>Hoje</h3>
-            <p>87</p>
-        </div>
-
-        <div class="card">
-            <h3>Músicas</h3>
-            <p>1248</p>
-        </div>
-
-        <div class="card">
-            <h3>Outfits</h3>
-            <p>892</p>
-        </div>
+<header class="dash-header">
+    <div>
+        <h1 class="dash-title">doubleM - Análise o estilo, som e comportamento do mundo ao seu redor</h1>
+        <p class="dash-subtitle">Resultados de todas as pessoas</p>
     </div>
 
-    <div class="graficos">
-
-        <div class="grafico">
-            <h3>Perfis</h3>
-            <canvas id="graficoPerfis"></canvas>
+    <div class="header-right">
+        <div class="user-box">
+        <span class="user-name" id="spanNomeUsuario">Usuário</span>
+        <span class="user-divider">•</span>
+        <span class="user-music" id="spanGeneroUsuario">Trap</span>
+        </div>
+        <div class="badge-user">
+            1.248 respostas registradas
         </div>
 
-        <div class="grafico">
-            <h3>Músicas</h3>
-            <canvas id="graficoMusicas"></canvas>
-        </div>
-
+        <button class="btn-logout">Sair</button>
     </div>
+</header>
 
-    <br>
+<main class="dashboard-container">
 
-    <div class="graficos">
+    <!-- CARDS -->
+    <section class="stats-grid">
 
-        <div class="grafico">
-            <h3>Gênero</h3>
-            <canvas id="graficoGenero"></canvas>
+        <div class="stat-card">
+            <span class="stat-label">Estilo mais popular</span>
+            <h2>Streetwear</h2>
+            <p>41% dos usuários</p>
         </div>
 
-        <div class="grafico">
-            <h3>Localização</h3>
-            <canvas id="graficoLocalizacao"></canvas>
+        <div class="stat-card">
+            <span class="stat-label">Gênero mais ouvido</span>
+            <h2>Trap</h2>
+            <p>62% das respostas</p>
         </div>
 
-    </div>
+        <div class="stat-card">
+            <span class="stat-label">Maior compatibilidade</span>
+            <h2>92%</h2>
+            <p>Usuários satisfeitos com recomendações</p>
+        </div>
 
-</div>
+        <div class="stat-card">
+            <span class="stat-label">Outfits recomendados</span>
+            <h2>3.482</h2>
+            <p>Looks gerados automaticamente</p>
+        </div>
+
+    </section>
+
+
+    <section class="charts-grid-2">
+
+        <div class="chart-card large-card">
+            <div class="card-top">
+                <h3>Estilos de roupa mais usados</h3>
+            </div>
+
+            <canvas id="chartEstilos"></canvas>
+        </div>
+
+
+        <div class="chart-card">
+            <div class="card-top">
+                <h3>Gêneros musicais favoritos</h3>
+            </div>
+
+            <canvas id="chartGeneros"></canvas>
+        </div>
+
+    </section>
+
+    <section class="charts-grid-2">
+
+        <div class="chart-card">
+            <div class="card-top">
+                <h3>Traps mais recomendados</h3>
+            </div>
+
+            <canvas id="chartTraps"></canvas>
+        </div>
+
+
+        <div class="chart-card">
+            <div class="card-top">
+                <h3>Resultados positivos</h3>
+            </div>
+
+            <canvas id="chartResultados"></canvas>
+        </div>
+
+    </section>
+
+    <section class="bottom-grid">
+
+        <div class="chart-card heat-card">
+            <div class="card-top">
+                <h3>Horários em que mais ouvem música</h3>
+            </div>
+
+            <canvas id="chartHorario"></canvas>
+        </div>
+
+
+        <div class="quote-card">
+            <span class="quote-mark">“</span>
+
+            <p>
+                Seu estilo fala antes mesmo da sua música tocar.
+            </p>
+
+            <span class="quote-author">
+                doubleM
+            </span>
+        </div>
+
+    </section>
+
+</main>
 
 <script>
-new Chart(document.getElementById('graficoPerfis'), {
+
+    const nomeUsuario = sessionStorage.NOME_USUARIO;
+    const generoMusical = sessionStorage.GENERO_MUSICAL_USUARIO;
+
+if(nomeUsuario != undefined){
+    document.getElementById("spanNomeUsuario").innerHTML = nomeUsuario;
+}
+
+if(generoMusical != undefined){
+    document.getElementById("spanGeneroUsuario").innerHTML = generoMusical;
+}
+
+Chart.defaults.font.family = 'Poppins';
+Chart.defaults.color = '#6b7280';
+
+
+// ESTILOS DE ROUPA
+new Chart(document.getElementById('chartEstilos'), {
+    type: 'bar',
+    data: {
+        labels: [
+            'Streetwear',
+            'Old Money',
+            'Minimalista',
+            'Y2K',
+            'Techwear'
+        ],
+        datasets: [{
+            label: 'Usuários',
+            data: [412, 281, 194, 168, 123],
+            backgroundColor: [
+                '#7c3aed',
+                '#8b5cf6',
+                '#a78bfa',
+                '#c4b5fd',
+                '#ddd6fe'
+            ],
+            borderRadius: 10
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: '#f1f5f9'
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+
+
+// GENEROS MUSICAIS
+new Chart(document.getElementById('chartGeneros'), {
     type: 'doughnut',
     data: {
-        labels: ['Minimalista', 'Equilibrado', 'Estiloso', 'Experimental'],
+        labels: [
+            'Trap',
+            'Funk',
+            'Rap',
+            'R&B',
+            'Indie'
+        ],
         datasets: [{
-            data: [28, 32, 23, 17]
+            data: [62, 18, 10, 6, 4],
+            backgroundColor: [
+                '#7c3aed',
+                '#ec4899',
+                '#0ea5e9',
+                '#f59e0b',
+                '#10b981'
+            ],
+            borderWidth: 0
         }]
+    },
+    options: {
+        cutout: '70%',
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
     }
 });
 
-new Chart(document.getElementById('graficoMusicas'), {
+
+// TRAPS MAIS RECOMENDADOS
+new Chart(document.getElementById('chartTraps'), {
     type: 'bar',
     data: {
-        labels: ['Matuê', 'Teto', 'WIU', 'Travis Scott', 'Yeat'],
+        labels: [
+            'Máquina do Tempo',
+            'M4',
+            'FE!N',
+            'Conexões',
+            'Coração de Gelo'
+        ],
         datasets: [{
             label: 'Recomendações',
-            data: [312, 278, 254, 198, 176]
+            data: [312, 281, 247, 210, 198],
+            backgroundColor: '#7c3aed',
+            borderRadius: 10
         }]
+    },
+    options: {
+        indexAxis: 'y',
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    color: '#f3f4f6'
+                }
+            },
+            y: {
+                grid: {
+                    display: false
+                }
+            }
+        }
     }
 });
 
-new Chart(document.getElementById('graficoGenero'), {
-    type: 'pie',
+
+// RESULTADOS POSITIVOS
+new Chart(document.getElementById('chartResultados'), {
+    type: 'line',
     data: {
-        labels: ['Masculino', 'Feminino', 'Outro'],
+        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
         datasets: [{
-            data: [68, 30, 2]
+            label: 'Satisfação dos usuários',
+            data: [61, 68, 73, 79, 88, 92],
+            borderColor: '#7c3aed',
+            backgroundColor: 'rgba(124,58,237,0.1)',
+            fill: true,
+            tension: 0.4
         }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100,
+                grid: {
+                    color: '#f3f4f6'
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
     }
 });
 
-new Chart(document.getElementById('graficoLocalizacao'), {
-    type: 'bar',
+
+// HORARIOS
+new Chart(document.getElementById('chartHorario'), {
+    type: 'line',
     data: {
-        labels: ['SP', 'RJ', 'MG', 'BA', 'PR', 'Outros'],
+        labels: [
+            '08h',
+            '10h',
+            '12h',
+            '14h',
+            '16h',
+            '18h',
+            '20h',
+            '22h'
+        ],
         datasets: [{
-            label: '%',
-            data: [28, 18, 12, 8, 7, 27]
+            label: 'Respostas',
+            data: [21, 39, 54, 73, 88, 120, 148, 101],
+            borderColor: '#8b5cf6',
+            backgroundColor: 'rgba(139,92,246,0.12)',
+            fill: true,
+            tension: 0.4
         }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: '#f3f4f6'
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
     }
 });
+
 </script>
 
 </body>

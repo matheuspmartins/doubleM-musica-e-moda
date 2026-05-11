@@ -1,7 +1,7 @@
 const { buscarAquariosPorUsuario } = require("../controllers/questionarioController");
 var database = require("../database/config");
 
-function buscarAquariosPorEmpresa(id) {
+function buscarPorUsuario(usuarioId) {
 
   var instrucaoSql = `SELECT * FROM questionario q WHERE fk_usuario = ${id}`;
 
@@ -9,16 +9,15 @@ function buscarAquariosPorEmpresa(id) {
   return database.executar(instrucaoSql);
 }
 
-function cadastrar(id, descricao) {
+function cadastrar(perfilResultado, fkUsuario) {
+    var instrucaoSql = `INSERT INTO questionario (perfil_resultado, fk_usuario) VALUES ('${perfilResultado}', ${fkUsuario})`;
 
-  var instrucaoSql = `INSERT INTO (fk_empresa) questionario VALUES (${id})`;
-
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
 
 module.exports = {
-  buscarAquariosPorUsuario,
+  buscarPorUsuario,
   cadastrar
 }

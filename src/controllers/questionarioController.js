@@ -1,9 +1,9 @@
 var aquarioModel = require("../models/questionarioModel");
 
-function buscarAquariosPorUsuario(req, res) {
-  var idUsuario = req.params.idUsuario;
+function buscarPorUsuario(req, res) {
+  var usuarioId = req.params.usuarioId;
 
-  questionarioModel.buscarAquariosPorUsuario(idUsuario).then((resultado) => {
+  questionarioModel.PorUsuario(usuarioId).then((resultado) => {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
@@ -18,17 +18,17 @@ function buscarAquariosPorUsuario(req, res) {
 
 
 function cadastrar(req, res) {
-  var descricao = req.body.perfilResultadoServer;
-  var idUsuario = req.body.fkUsuarioServer;
+  var perfilResultado = req.body.perfilResultadoServer;
+  var fkUsuario = req.body.fkUsuarioServer;
 
   if (descricao == undefined) {
     res.status(400).send("perfilResultado está undefined!");
-  } else if (idUsuario == undefined) {
+  } else if (usuarioId == undefined) {
     res.status(400).send("fkUsuario está undefined!");
   } else {
 
 
-    aquarioModel.cadastrar(descricao, idUsuario)
+    questionarioModel.cadastrar(perfilResultado, fkUsuario)
       .then((resultado) => {
         res.status(201).json(resultado);
       }
@@ -44,6 +44,6 @@ function cadastrar(req, res) {
 }
 
 module.exports = {
-  buscarAquariosPorUsuario,
+  buscarPorUsuario,
   cadastrar
 }

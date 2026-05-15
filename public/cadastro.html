@@ -16,24 +16,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
-<body onload="listar()">
+<body>
 
-<nav>
-    <div class="nav-left">
-        doubleM
+<div class="header">
+    <div class="container">
+        <h1 class="titulo">doubleM</h1>
+        <ul class="navbar">
+            <li><a href="index.html">Inicial</a></li>
+            <li>|</li>
+            <li><a href="login.html">Login</a></li>
+            <li class="agora"><a href="#">Cadastro</a></li>
+        </ul>
     </div>
-
-    <div class="nav-center">
-        <button class="home">HOME</button>
-        <button class="quest">QUESTIONÁRIO</button>
-        <button class="trap">TRAP</button>
-    </div>
-
-    <div class="nav-right">
-        <button class="login" onclick="window.location.href='login.html'">Login</button>
-        <button class="cadastro" onclick="window.location.href='cadastro.html'">Cadastro</button>
-    </div>
-</nav>
+</div>
 
 <div class="login">
     <div class="alerta_erro">
@@ -58,8 +53,8 @@
                 </div>
 
                 <div class="campo">
-                    <span>Informe Seu Gênero Musical Favorito:</span>
-                    <input id="genMus_input" type="text" placeholder="Samba" />
+                    <span>Gênero Musical Favorito:</span>
+                    <input id="genMus_input" type="text" placeholder="Ex: Trap, Samba, Rock..." />
                 </div>
 
                 <div class="campo">
@@ -95,8 +90,6 @@
 
 <script>
 
-let listaEmpresasCadastradas = [];
-
 function cadastrar() {
     var nomeVar = nome_input.value;
     var emailVar = email_input.value;
@@ -112,11 +105,12 @@ function cadastrar() {
         generoMusical == ""
     ) {
         cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+        mensagem_erro.innerHTML = "Preencha todos os campos!";
         return false;
     } else {
         setInterval(sumirMensagem, 5000);
     }
+
     var contadorLetras = 0;
 
     for (var i = 0; i < nomeVar.length; i++) {
@@ -191,8 +185,8 @@ function cadastrar() {
     .then(function (resposta) {
         if (resposta.ok) {
             cardErro.style.display = "block";
-            mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando...";
-            setTimeout(() => {
+            mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para o login...";
+            setTimeout(function () {
                 window.location = "login.html";
             }, 2000);
         } else {
@@ -201,6 +195,8 @@ function cadastrar() {
     })
     .catch(function (erro) {
         console.log(erro);
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Erro ao realizar o cadastro. Tente novamente.";
     });
 
     return false;

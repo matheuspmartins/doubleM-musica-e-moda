@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>doubleM | Questionário</title>
+
+<script src="./js/sessao.js"></script>
+
+<link rel="icon" href="./assets/icon/favicon2.ico">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: black;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    min-height: 100vh;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+}
+
+.titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+}
+
+.navbar {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    align-items: center;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    color: orangered;
+}
+
+.agora a {
+    font-weight: bold;
+    color: orangered;
+}
+
+/* QUESTIONÁRIO */
+.questionario-container {
+    max-width: 750px;
+    margin: 60px auto;
+    padding: 0 20px 60px;
+}
+
+.questionario-container h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.questionario-container .subtitulo {
+    text-align: center;
+    opacity: 0.6;
+    margin-bottom: 40px;
+    font-size: 14px;
+}
+
+/* Barra de progresso */
+.progresso-barra {
+    width: 100%;
+    height: 6px;
+    background: #222;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.progresso-preenchido {
+    height: 100%;
+    background: orangered;
+    border-radius: 10px;
+    transition: width 0.4s ease;
+}
+
+/* Pergunta */
+.pergunta-bloco {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.pergunta-bloco.ativa {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.numero-pergunta {
+    font-size: 12px;
+    color: orangered;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.texto-pergunta {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.opcao {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 20px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.25s;
+    background: #0a0a0a;
+}
+
+.opcao:hover {
+    border-color: orangered;
+    background: rgba(255, 69, 0, 0.08);
+}
+
+.opcao.selecionada {
+    border-color: orangered;
+    background: rgba(255, 69, 0, 0.15);
+}
+
+.opcao-letra {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 1px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+    transition: 0.25s;
+}
+
+.opcao.selecionada .opcao-letra {
+    background: orangered;
+    border-color: orangered;
+}
+
+.opcao-texto {
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+/* Navegação */
+.navegacao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 35px;
+}
+
+.btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn-anterior {
+    background: transparent;
+    border: 1px solid #444;
+    color: white;
+}
+
+.btn-anterior:hover {
+    border-color: white;
+}
+
+.btn-proximo {
+    background: orangered;
+    color: black;
+}
+
+.btn-finalizar {
+    background: #2f6f2f;
+    color: white;
+}
+
+.contador {
+    font-size: 13px;
+    opacity: 0.5;
+}
+
+/* Alerta */
+.alerta {
+    display: none;
+    background: #ff4d4d;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+/* Loading */
+.loading-div {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.loading-div img {
+    width: 40px;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    opacity: 0.4;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="container">
+        <h1 class="titulo">doubleM</h1>
+        <ul class="navbar">
+            <li><a href="index.html">Inicial</a></li>
+            <li>|</li>
+            <li class="agora"><a href="#">Questionário</a></li>
+            <li><a id="b_usuario" href="#">Olá, usuário</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="questionario-container">
+    <h1>Descubra seu perfil</h1>
+    <p class="subtitulo">Responda 9 perguntas e saiba qual estilo combina com você</p>
+
+    <div class="progresso-barra">
+        <div class="progresso-preenchido" id="progressoBarra" style="width: 11%;"></div>
+    </div>
+
+    <!-- Pergunta 1 -->
+    <div class="pergunta-bloco ativa" id="p1">
+        <p class="numero-pergunta">Pergunta 1 de 9</p>
+        <p class="texto-pergunta">Como você prefere se expressar?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(1, 'A', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">De forma discreta, sem chamar atenção</div>
+            </div>
+            <div class="opcao" onclick="selecionar(1, 'B', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Com estilo, mas sem exagero</div>
+            </div>
+            <div class="opcao" onclick="selecionar(1, 'C', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Quero ser notado, estilo marcante</div>
+            </div>
+            <div class="opcao" onclick="selecionar(1, 'D', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">Depende do momento, gosto de variar</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 2 -->
+    <div class="pergunta-bloco" id="p2">
+        <p class="numero-pergunta">Pergunta 2 de 9</p>
+        <p class="texto-pergunta">Qual dessas frases mais combina com você?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(2, 'A', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">"Menos é mais."</div>
+            </div>
+            <div class="opcao" onclick="selecionar(2, 'B', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">"Equilíbrio é tudo."</div>
+            </div>
+            <div class="opcao" onclick="selecionar(2, 'C', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">"Eu nasci pra ser diferente."</div>
+            </div>
+            <div class="opcao" onclick="selecionar(2, 'D', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">"Eu mudo conforme a vibe."</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 3 -->
+    <div class="pergunta-bloco" id="p3">
+        <p class="numero-pergunta">Pergunta 3 de 9</p>
+        <p class="texto-pergunta">Como é seu estilo de roupa?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(3, 'A', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">Básico / confortável</div>
+            </div>
+            <div class="opcao" onclick="selecionar(3, 'B', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Casual arrumado</div>
+            </div>
+            <div class="opcao" onclick="selecionar(3, 'C', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Fashion / chamativo</div>
+            </div>
+            <div class="opcao" onclick="selecionar(3, 'D', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">Misturado / experimental</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 4 -->
+    <div class="pergunta-bloco" id="p4">
+        <p class="numero-pergunta">Pergunta 4 de 9</p>
+        <p class="texto-pergunta">Qual dessas peças você mais usaria?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(4, 'A', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">Moletom neutro</div>
+            </div>
+            <div class="opcao" onclick="selecionar(4, 'B', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Camiseta + calça bem combinadas</div>
+            </div>
+            <div class="opcao" onclick="selecionar(4, 'C', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Peça de marca / destaque</div>
+            </div>
+            <div class="opcao" onclick="selecionar(4, 'D', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">Algo diferente que poucas pessoas usariam</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 5 -->
+    <div class="pergunta-bloco" id="p5">
+        <p class="numero-pergunta">Pergunta 5 de 9</p>
+        <p class="texto-pergunta">Quando você escuta música, você busca:</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(5, 'A', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">Relaxar</div>
+            </div>
+            <div class="opcao" onclick="selecionar(5, 'B', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Se identificar</div>
+            </div>
+            <div class="opcao" onclick="selecionar(5, 'C', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Se sentir poderoso / confiante</div>
+            </div>
+            <div class="opcao" onclick="selecionar(5, 'D', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">Sentir algo novo / diferente</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 6 -->
+    <div class="pergunta-bloco" id="p6">
+        <p class="numero-pergunta">Pergunta 6 de 9</p>
+        <p class="texto-pergunta">O que mais te atrai em um artista?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(6, 'A', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">A vibe tranquila</div>
+            </div>
+            <div class="opcao" onclick="selecionar(6, 'B', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">A consistência</div>
+            </div>
+            <div class="opcao" onclick="selecionar(6, 'C', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">A presença / estilo</div>
+            </div>
+            <div class="opcao" onclick="selecionar(6, 'D', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcoa-texto">A originalidade</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 7 -->
+    <div class="pergunta-bloco" id="p7">
+        <p class="numero-pergunta">Pergunta 7 de 9</p>
+        <p class="texto-pergunta">Como você quer que as pessoas te enxerguem?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(7, 'A', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">Tranquilo</div>
+            </div>
+            <div class="opcao" onclick="selecionar(7, 'B', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Estiloso</div>
+            </div>
+            <div class="opcao" onclick="selecionar(7, 'C', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Impactante</div>
+            </div>
+            <div class="opcao" onclick="selecionar(7, 'D', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">Único</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 8 -->
+    <div class="pergunta-bloco" id="p8">
+        <p class="numero-pergunta">Pergunta 8 de 9</p>
+        <p class="texto-pergunta">Você prefere:</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(8, 'A', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">Seguir seu próprio ritmo</div>
+            </div>
+            <div class="opcao" onclick="selecionar(8, 'B', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Ter equilíbrio em tudo</div>
+            </div>
+            <div class="opcao" onclick="selecionar(8, 'C', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Se destacar na multidão</div>
+            </div>
+            <div class="opcao" onclick="selecionar(8, 'D', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">Quebrar padrões</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 9 -->
+    <div class="pergunta-bloco" id="p9">
+        <p class="numero-pergunta">Pergunta 9 de 9</p>
+        <p class="texto-pergunta">Qual cenário você se identifica mais?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(9, 'A', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">Em casa, tranquilo</div>
+            </div>
+            <div class="opcao" onclick="selecionar(9, 'B', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Saindo com estilo</div>
+            </div>
+            <div class="opcao" onclick="selecionar(9, 'C', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Em eventos, chamando atenção</div>
+            </div>
+            <div class="opcao" onclick="selecionar(9, 'D', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">Explorando coisas novas</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alerta" id="alertaMensagem">Por favor, selecione uma opção antes de continuar.</div>
+
+    <div class="navegacao">
+        <button class="btn btn-anterior" id="btnAnterior" onclick="anterior()" style="display:none;">← Anterior</button>
+        <span class="contador" id="contadorTexto">1 / 9</span>
+        <button class="btn btn-proximo" id="btnProximo" onclick="proximo()">Próximo →</button>
+        <button class="btn btn-finalizar" id="btnFinalizar" onclick="finalizar()" style="display:none;">Finalizar ✓</button>
+    </div>
+
+    <div class="loading-div" id="div_aguardar">
+        <img src="./assets/circle-loading.gif">
+    </div>
+</div>
+
+<div class="footer">
+    2026 doubleM — Moda & Música
+</div>
+
+</body>
+</html>
+
+<script>
+// Verifica sessão
+validarSessao();
+
+// Estado do questionário
+var perguntaAtual = 1;
+var totalPerguntas = 9;
+var respostas = {};
+
+function selecionar(numeroPergunta, letra, elemento) {
+    // Remove seleção anterior na mesma pergunta
+    var opcoes = document.querySelectorAll("#p" + numeroPergunta + " .opcao");
+    for (var i = 0; i < opcoes.length; i++) {
+        opcoes[i].classList.remove("selecionada");
+    }
+
+    // Marca a opção selecionada
+    elemento.classList.add("selecionada");
+
+    // Salva a resposta
+    respostas[numeroPergunta] = letra;
+
+    // Esconde alerta se estiver visível
+    document.getElementById("alertaMensagem").style.display = "none";
+}
+
+function atualizar() {
+    // Atualiza a barra de progresso
+    var percentual = (perguntaAtual / totalPerguntas) * 100;
+    document.getElementById("progressoBarra").style.width = percentual + "%";
+
+    // Atualiza o contador
+    document.getElementById("contadorTexto").innerHTML = perguntaAtual + " / " + totalPerguntas;
+
+    // Mostra/esconde botões
+    if (perguntaAtual == 1) {
+        document.getElementById("btnAnterior").style.display = "none";
+    } else {
+        document.getElementById("btnAnterior").style.display = "block";
+    }
+
+    if (perguntaAtual == totalPerguntas) {
+        document.getElementById("btnProximo").style.display = "none";
+        document.getElementById("btnFinalizar").style.display = "block";
+    } else {
+        document.getElementById("btnProximo").style.display = "block";
+        document.getElementById("btnFinalizar").style.display = "none";
+    }
+}
+
+function proximo() {
+    if (!respostas[perguntaAtual]) {
+        document.getElementById("alertaMensagem").style.display = "block";
+        return;
+    }
+
+    // Esconde pergunta atual
+    document.getElementById("p" + perguntaAtual).classList.remove("ativa");
+
+    // Avança
+    perguntaAtual++;
+
+    // Mostra próxima
+    document.getElementById("p" + perguntaAtual).classList.add("ativa");
+
+    atualizar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function anterior() {
+    // Esconde pergunta atual
+    document.getElementById("p" + perguntaAtual).classList.remove("ativa");
+
+    // Volta
+    perguntaAtual--;
+
+    // Mostra anterior
+    document.getElementById("p" + perguntaAtual).classList.add("ativa");
+
+    atualizar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function calcularPerfil() {
+    var contagem = { A: 0, B: 0, C: 0, D: 0 };
+
+    for (var i = 1; i <= totalPerguntas; i++) {
+        var resp = respostas[i];
+        if (resp) {
+            contagem[resp]++;
+        }
+    }
+
+    var maior = 'A';
+    var maiorValor = contagem['A'];
+
+    if (contagem['B'] > maiorValor) { maior = 'B'; maiorValor = contagem['B']; }
+    if (contagem['C'] > maiorValor) { maior = 'C'; maiorValor = contagem['C']; }
+    if (contagem['D'] > maiorValor) { maior = 'D'; maiorValor = contagem['D']; }
+
+    var perfis = {
+        A: 'Minimalista',
+        B: 'Equilibrado',
+        C: 'Influente e Estiloso',
+        D: 'Experimental/Autêntico'
+    };
+
+    return perfis[maior];
+}
+
+function finalizar() {
+    if (!respostas[perguntaAtual]) {
+        document.getElementById("alertaMensagem").style.display = "block";
+        return;
+    }
+
+    var perfil = calcularPerfil();
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    document.getElementById("div_aguardar").style.display = "block";
+    document.getElementById("btnFinalizar").style.display = "none";
+
+    // Salva o perfil no banco
+    fetch("/questionarios/cadastrar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            perfilResultadoServer: perfil,
+            fkUsuarioServer: idUsuario
+        })
+    }).then(function (resposta) {
+        // Salva o perfil na sessão
+        sessionStorage.PERFIL_USUARIO = perfil;
+
+        // Redireciona para o dashboard
+        setTimeout(function () {
+            window.location = "./dashboard/dashboard.html";
+        }, 1000);
+
+    }).catch(function (erro) {
+        console.log(erro);
+        // Mesmo com erro, redireciona para o dashboard com o perfil calculado
+        sessionStorage.PERFIL_USUARIO = perfil;
+        setTimeout(function () {
+            window.location = "./dashboard/dashboard.html";
+        }, 1000);
+    });
+}
+</script>

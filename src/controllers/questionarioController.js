@@ -1,49 +1,52 @@
-var aquarioModel = require("../models/questionarioModel");
+
+var questionarioModel = require("../models/questionarioModel");
 
 function buscarPorUsuario(req, res) {
-  var usuarioId = req.params.usuarioId;
+    var usuarioId = req.params.usuarioId;
 
-  questionarioModel.PorUsuario(usuarioId).then((resultado) => {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).json([]);
-    }
-  }).catch(function (erro) {
-    console.log(erro);
-    console.log("Houve um erro ao buscar os questionarios: ", erro.sqlMessage);
-    res.status(500).json(erro.sqlMessage);
-  });
+    questionarioModel.buscarPorUsuario(usuarioId)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).json([]);
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
 }
 
-
 function cadastrar(req, res) {
-  var perfilResultado = req.body.perfilResultadoServer;
-  var fkUsuario = req.body.fkUsuarioServer;
 
-  if (descricao == undefined) {
-    res.status(400).send("perfilResultado está undefined!");
-  } else if (usuarioId == undefined) {
-    res.status(400).send("fkUsuario está undefined!");
-  } else {
+    var perfilResultado = req.body.perfilResultadoServer;
+    var fkUsuario = req.body.fkUsuarioServer;
 
+    var compatibilidadeEstilo = req.body.compatibilidadeEstiloServer;
+    var horarioMusica = req.body.horarioMusicaServer;
+    var estiloRoupa = req.body.estiloRoupaServer;
 
-    questionarioModel.cadastrar(perfilResultado, fkUsuario)
-      .then((resultado) => {
-        res.status(201).json(resultado);
-      }
-      ).catch((erro) => {
-        console.log(erro);
-        console.log(
-          "\nHouve um erro ao realizar o cadastro! Erro: ",
-          erro.sqlMessage
-        );
-        res.status(500).json(erro.sqlMessage);
-      });
-  }
+    if (perfilResultado == undefined || fkUsuario == undefined) {
+        res.status(400).send("Dados obrigatórios ausentes!");
+    } else {
+
+        questionarioModel.cadastrar(
+            perfilResultado,
+            compatibilidadeEstilo,
+            horarioMusica,
+            estiloRoupa,
+            fkUsuario
+        )
+            .then(function (resultado) {
+                res.status(201).json(resultado);
+            }).catch(function (erro) {
+                console.log(erro);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
 }
 
 module.exports = {
-  buscarPorUsuario,
-  cadastrar
-}
+    buscarPorUsuario,
+    cadastrar
+};

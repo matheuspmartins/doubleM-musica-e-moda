@@ -27,50 +27,73 @@ body {
     min-height: 100vh;
 }
 
-.header {
+/* ===== NAV (HEADER DA HOME) ===== */
+nav {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 40px;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-}
-
-.navbar {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    align-items: center;
-}
-
-.navbar a {
-    text-decoration: none;
-    color: white;
-    transition: 0.3s;
-}
-
-.navbar a:hover {
-    color: orangered;
-}
-
-.agora a {
+.nav-left {
     font-weight: bold;
-    color: orangered;
+    font-size: 18px;
+    font-family: 'Playfair Display', serif;
+    cursor: pointer;
 }
 
-/* QUESTIONÁRIO */
+.nav-center {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-right {
+    display: flex;
+    gap: 10px;
+}
+
+nav button {
+    font-size: 14px;
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 1px;
+    font-family: 'Poppins', sans-serif;
+}
+
+nav button:hover {
+    transform: scale(1.08);
+}
+
+.btn-home { background: orangered; color: white; }
+.btn-quest { background: #2f6f2f; color: white; }
+.btn-trap { background: #65bce4; color: black; }
+
+.btn-login {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+}
+
+.btn-login:hover {
+    background: white;
+    color: black;
+}
+
+.btn-cadastro {
+    background: orangered;
+    color: white;
+    font-weight: 600;
+}
+
+/* ===== QUESTIONÁRIO ===== */
 .questionario-container {
     max-width: 750px;
     margin: 60px auto;
@@ -272,29 +295,33 @@ body {
 
 <body>
 
-<div class="header">
-    <div class="container">
-        <h1 class="titulo">doubleM</h1>
-        <ul class="navbar">
-            <li><a href="index.html">Inicial</a></li>
-            <li>|</li>
-            <li class="agora"><a href="#">Questionário</a></li>
-            <li><a id="b_usuario" href="#">Olá, usuário</a></li>
-        </ul>
+<!-- NAV (HEADER DA HOME) -->
+<nav>
+    <div class="nav-left" onclick="window.location.href='index.html'">doubleM</div>
+
+    <div class="nav-center">
+        <button class="btn-home" onclick="window.location.href='index.html'">HOME</button>
+        <button class="btn-quest" onclick="window.location.href='questionario.html'">QUESTIONÁRIO</button>
+        <button class="btn-trap" onclick="window.location.href='dashboard/dashboard.html'">TRAP</button>
     </div>
-</div>
+
+    <div class="nav-right">
+        <button class="btn-login" onclick="window.location.href='login.html'">Login</button>
+        <button class="btn-cadastro" onclick="window.location.href='cadastro.html'">Cadastro</button>
+    </div>
+</nav>
 
 <div class="questionario-container">
     <h1>Descubra seu perfil</h1>
-    <p class="subtitulo">Responda 9 perguntas e saiba qual estilo combina com você</p>
+    <p class="subtitulo">Responda perguntas sobre moda, personalidade e música para gerar análises da comunidade</p>
 
     <div class="progresso-barra">
-        <div class="progresso-preenchido" id="progressoBarra" style="width: 11%;"></div>
+        <div class="progresso-preenchido" id="progressoBarra" style="width: 8%;"></div>
     </div>
 
     <!-- Pergunta 1 -->
     <div class="pergunta-bloco ativa" id="p1">
-        <p class="numero-pergunta">Pergunta 1 de 9</p>
+        <p class="numero-pergunta">Pergunta 1 de 12</p>
         <p class="texto-pergunta">Como você prefere se expressar?</p>
         <div class="opcoes">
             <div class="opcao" onclick="selecionar(1, 'A', this)">
@@ -318,7 +345,7 @@ body {
 
     <!-- Pergunta 2 -->
     <div class="pergunta-bloco" id="p2">
-        <p class="numero-pergunta">Pergunta 2 de 9</p>
+        <p class="numero-pergunta">Pergunta 2 de 12</p>
         <p class="texto-pergunta">Qual dessas frases mais combina com você?</p>
         <div class="opcoes">
             <div class="opcao" onclick="selecionar(2, 'A', this)">
@@ -342,8 +369,8 @@ body {
 
     <!-- Pergunta 3 -->
     <div class="pergunta-bloco" id="p3">
-        <p class="numero-pergunta">Pergunta 3 de 9</p>
-        <p class="texto-pergunta">Como é seu estilo de roupa?</p>
+        <p class="numero-pergunta">Pergunta 3 de 12</p>
+        <p class="texto-pergunta">Como é seu estilo de roupa no dia a dia?</p>
         <div class="opcoes">
             <div class="opcao" onclick="selecionar(3, 'A', this)">
                 <div class="opcao-letra">A</div>
@@ -366,7 +393,7 @@ body {
 
     <!-- Pergunta 4 -->
     <div class="pergunta-bloco" id="p4">
-        <p class="numero-pergunta">Pergunta 4 de 9</p>
+        <p class="numero-pergunta">Pergunta 4 de 12</p>
         <p class="texto-pergunta">Qual dessas peças você mais usaria?</p>
         <div class="opcoes">
             <div class="opcao" onclick="selecionar(4, 'A', this)">
@@ -390,7 +417,7 @@ body {
 
     <!-- Pergunta 5 -->
     <div class="pergunta-bloco" id="p5">
-        <p class="numero-pergunta">Pergunta 5 de 9</p>
+        <p class="numero-pergunta">Pergunta 5 de 12</p>
         <p class="texto-pergunta">Quando você escuta música, você busca:</p>
         <div class="opcoes">
             <div class="opcao" onclick="selecionar(5, 'A', this)">
@@ -414,7 +441,7 @@ body {
 
     <!-- Pergunta 6 -->
     <div class="pergunta-bloco" id="p6">
-        <p class="numero-pergunta">Pergunta 6 de 9</p>
+        <p class="numero-pergunta">Pergunta 6 de 12</p>
         <p class="texto-pergunta">O que mais te atrai em um artista?</p>
         <div class="opcoes">
             <div class="opcao" onclick="selecionar(6, 'A', this)">
@@ -431,14 +458,14 @@ body {
             </div>
             <div class="opcao" onclick="selecionar(6, 'D', this)">
                 <div class="opcao-letra">D</div>
-                <div class="opcoa-texto">A originalidade</div>
+                <div class="opcao-texto">A originalidade</div>
             </div>
         </div>
     </div>
 
     <!-- Pergunta 7 -->
     <div class="pergunta-bloco" id="p7">
-        <p class="numero-pergunta">Pergunta 7 de 9</p>
+        <p class="numero-pergunta">Pergunta 7 de 12</p>
         <p class="texto-pergunta">Como você quer que as pessoas te enxerguem?</p>
         <div class="opcoes">
             <div class="opcao" onclick="selecionar(7, 'A', this)">
@@ -462,7 +489,7 @@ body {
 
     <!-- Pergunta 8 -->
     <div class="pergunta-bloco" id="p8">
-        <p class="numero-pergunta">Pergunta 8 de 9</p>
+        <p class="numero-pergunta">Pergunta 8 de 12</p>
         <p class="texto-pergunta">Você prefere:</p>
         <div class="opcoes">
             <div class="opcao" onclick="selecionar(8, 'A', this)">
@@ -486,7 +513,7 @@ body {
 
     <!-- Pergunta 9 -->
     <div class="pergunta-bloco" id="p9">
-        <p class="numero-pergunta">Pergunta 9 de 9</p>
+        <p class="numero-pergunta">Pergunta 9 de 12</p>
         <p class="texto-pergunta">Qual cenário você se identifica mais?</p>
         <div class="opcoes">
             <div class="opcao" onclick="selecionar(9, 'A', this)">
@@ -508,11 +535,79 @@ body {
         </div>
     </div>
 
+    <!-- Pergunta 10  -->
+    <div class="pergunta-bloco" id="p10">
+        <p class="numero-pergunta">Pergunta 10 de 12</p>
+        <p class="texto-pergunta">Seu estilo de roupa combina com seu gosto musical?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(10, 'Muito', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">Totalmente, representam minha personalidade</div>
+            </div>
+            <div class="opcao" onclick="selecionar(10, 'Parcialmente', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Em partes, depende do momento</div>
+            </div>
+            <div class="opcao" onclick="selecionar(10, 'Nao', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Não muito, meu estilo muda bastante</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 11 -->
+    <div class="pergunta-bloco" id="p11">
+        <p class="numero-pergunta">Pergunta 11 de 12</p>
+        <p class="texto-pergunta">Qual horário você mais escuta música?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(11, 'Manha', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">Manhã</div>
+            </div>
+            <div class="opcao" onclick="selecionar(11, 'Tarde', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Tarde</div>
+            </div>
+            <div class="opcao" onclick="selecionar(11, 'Noite', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Noite</div>
+            </div>
+            <div class="opcao" onclick="selecionar(11, 'Madrugada', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">Madrugada</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergunta 12 -->
+    <div class="pergunta-bloco" id="p12">
+        <p class="numero-pergunta">Pergunta 12 de 12</p>
+        <p class="texto-pergunta">Qual estilo de roupa combina mais com você?</p>
+        <div class="opcoes">
+            <div class="opcao" onclick="selecionar(12, 'Streetwear', this)">
+                <div class="opcao-letra">A</div>
+                <div class="opcao-texto">Streetwear</div>
+            </div>
+            <div class="opcao" onclick="selecionar(12, 'OldMoney', this)">
+                <div class="opcao-letra">B</div>
+                <div class="opcao-texto">Old Money</div>
+            </div>
+            <div class="opcao" onclick="selecionar(12, 'Minimalista', this)">
+                <div class="opcao-letra">C</div>
+                <div class="opcao-texto">Minimalista</div>
+            </div>
+            <div class="opcao" onclick="selecionar(12, 'Y2K', this)">
+                <div class="opcao-letra">D</div>
+                <div class="opcao-texto">Y2K / Fashionista</div>
+            </div>
+        </div>
+    </div>
+
     <div class="alerta" id="alertaMensagem">Por favor, selecione uma opção antes de continuar.</div>
 
     <div class="navegacao">
         <button class="btn btn-anterior" id="btnAnterior" onclick="anterior()" style="display:none;">← Anterior</button>
-        <span class="contador" id="contadorTexto">1 / 9</span>
+        <span class="contador" id="contadorTexto">1 / 12</span>
         <button class="btn btn-proximo" id="btnProximo" onclick="proximo()">Próximo →</button>
         <button class="btn btn-finalizar" id="btnFinalizar" onclick="finalizar()" style="display:none;">Finalizar ✓</button>
     </div>
@@ -526,16 +621,14 @@ body {
     2026 doubleM — Moda & Música
 </div>
 
-</body>
-</html>
-
 <script>
+
 // Verifica sessão
 validarSessao();
 
 // Estado do questionário
 var perguntaAtual = 1;
-var totalPerguntas = 9;
+var totalPerguntas = 12;
 var respostas = {};
 
 function selecionar(numeroPergunta, letra, elemento) {
@@ -585,13 +678,8 @@ function proximo() {
         return;
     }
 
-    // Esconde pergunta atual
     document.getElementById("p" + perguntaAtual).classList.remove("ativa");
-
-    // Avança
     perguntaAtual++;
-
-    // Mostra próxima
     document.getElementById("p" + perguntaAtual).classList.add("ativa");
 
     atualizar();
@@ -599,25 +687,21 @@ function proximo() {
 }
 
 function anterior() {
-    // Esconde pergunta atual
     document.getElementById("p" + perguntaAtual).classList.remove("ativa");
-
-    // Volta
     perguntaAtual--;
-
-    // Mostra anterior
     document.getElementById("p" + perguntaAtual).classList.add("ativa");
 
     atualizar();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// Calcula perfil com base nas perguntas 1-9 (A/B/C/D)
 function calcularPerfil() {
     var contagem = { A: 0, B: 0, C: 0, D: 0 };
 
-    for (var i = 1; i <= totalPerguntas; i++) {
+    for (var i = 1; i <= 9; i++) {
         var resp = respostas[i];
-        if (resp) {
+        if (resp && contagem[resp] !== undefined) {
             contagem[resp]++;
         }
     }
@@ -648,10 +732,14 @@ function finalizar() {
     var perfil = calcularPerfil();
     var idUsuario = sessionStorage.ID_USUARIO;
 
+    // Respostas das perguntas analytics
+    var compatibilidade = respostas[10] || '';
+    var horario = respostas[11] || '';
+    var estiloRoupa = respostas[12] || '';
+
     document.getElementById("div_aguardar").style.display = "block";
     document.getElementById("btnFinalizar").style.display = "none";
 
-    // Salva o perfil no banco
     fetch("/questionarios/cadastrar", {
         method: "POST",
         headers: {
@@ -659,24 +747,38 @@ function finalizar() {
         },
         body: JSON.stringify({
             perfilResultadoServer: perfil,
+            compatibilidadeEstiloServer: compatibilidade,
+            horarioMusicaServer: horario,
+            estiloRoupaServer: estiloRoupa,
             fkUsuarioServer: idUsuario
         })
     }).then(function (resposta) {
-        // Salva o perfil na sessão
-        sessionStorage.PERFIL_USUARIO = perfil;
 
-        // Redireciona para o dashboard
+        // Salva na sessão para uso na dashboard
+        sessionStorage.PERFIL_USUARIO = perfil;
+        sessionStorage.COMPATIBILIDADE_USUARIO = compatibilidade;
+        sessionStorage.HORARIO_USUARIO = horario;
+        sessionStorage.ESTILO_ROUPA_USUARIO = estiloRoupa;
+
         setTimeout(function () {
             window.location = "./dashboard/dashboard.html";
         }, 1000);
 
     }).catch(function (erro) {
         console.log(erro);
-        // Mesmo com erro, redireciona para o dashboard com o perfil calculado
+        // Mesmo com erro, salva na sessão e redireciona
         sessionStorage.PERFIL_USUARIO = perfil;
+        sessionStorage.COMPATIBILIDADE_USUARIO = compatibilidade;
+        sessionStorage.HORARIO_USUARIO = horario;
+        sessionStorage.ESTILO_ROUPA_USUARIO = estiloRoupa;
+
         setTimeout(function () {
             window.location = "./dashboard/dashboard.html";
         }, 1000);
     });
 }
+
 </script>
+
+</body>
+</html>

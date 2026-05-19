@@ -27,10 +27,7 @@ body {
     color: white;
 }
 
-.titulo {
-    font-family: 'Playfair Display', serif;
-}
-
+/* ===== NAV (HEADER DA HOME) ===== */
 nav {
     position: sticky;
     top: 0;
@@ -39,13 +36,16 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 15px 40px;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.85);
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .nav-left {
     font-weight: bold;
     font-size: 18px;
+    font-family: 'Playfair Display', serif;
+    cursor: pointer;
 }
 
 .nav-center {
@@ -58,45 +58,67 @@ nav {
     gap: 10px;
 }
 
-button {
+nav button {
     font-size: 14px;
     padding: 10px 18px;
     border: none;
     cursor: pointer;
     transition: 0.3s;
     letter-spacing: 1px;
+    font-family: 'Poppins', sans-serif;
 }
 
-button:hover {
-    transform: scale(1.1);
+nav button:hover {
+    transform: scale(1.08);
 }
 
-.home { background: orangered; }
-.quest { background: #2f6f2f; }
-.trap { background: #65bce4; }
+.btn-home { background: orangered; color: white; }
+.btn-quest { background: #2f6f2f; color: white; }
+.btn-trap { background: #65bce4; color: black; }
 
-.loginB {
+.btn-login {
     background: transparent;
     border: 1px solid white;
     color: white;
 }
 
-.loginB:hover {
+.btn-login:hover {
     background: white;
     color: black;
 }
 
-.cadastroB {
+.btn-cadastro {
     background: orangered;
-    color: black;
+    color: white;
     font-weight: 600;
 }
 
+/* ===== LOGIN ===== */
 .login {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    padding: 60px 20px;
+    min-height: calc(100vh - 70px);
+}
+
+.alerta_erro {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 90%;
+    max-width: 400px;
+}
+
+.card_erro {
+    display: none;
+    background: #ff4d4d;
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
 }
 
 .card-login {
@@ -107,11 +129,13 @@ button:hover {
     width: 350px;
     text-align: center;
     box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .card-login h2 {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-family: 'Playfair Display', serif;
+    font-size: 26px;
 }
 
 .campo {
@@ -120,18 +144,26 @@ button:hover {
 }
 
 .campo span {
-    font-size: 14px;
+    font-size: 13px;
+    opacity: 0.8;
 }
 
 .campo input {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
+    padding: 10px 12px;
+    margin-top: 6px;
     border-radius: 8px;
-    border: none;
+    border: 1px solid #333;
     outline: none;
     background: #111;
     color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.campo input:focus {
+    border-color: orangered;
 }
 
 .botao {
@@ -141,37 +173,51 @@ button:hover {
     border: none;
     border-radius: 8px;
     background: orangered;
-    color: black;
+    color: white;
     font-weight: 600;
     cursor: pointer;
     transition: 0.3s;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.5px;
 }
 
 .botao:hover {
-    transform: scale(1.05);
-}
-
-.card_erro {
-    display: none;
-    background: #ff4d4d;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    transform: scale(1.03);
+    background: #e63900;
 }
 
 .loading-div {
     display: none;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .loading-div img {
     width: 40px;
 }
 
+#div_erros_login {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #ff6b6b;
+}
+
+.link-cadastro {
+    margin-top: 20px;
+    font-size: 13px;
+    opacity: 0.6;
+}
+
+.link-cadastro a {
+    color: orangered;
+    text-decoration: none;
+}
+
 .footer {
     text-align: center;
     padding: 20px;
-    opacity: 0.6;
+    opacity: 0.4;
+    font-size: 13px;
 }
 </style>
 </head>
@@ -179,60 +225,56 @@ button:hover {
 <body>
 
 <nav>
-    <div class="nav-left">
-        doubleM
-    </div>
+    <div class="nav-left" onclick="window.location.href='index.html'">doubleM</div>
 
     <div class="nav-center">
-        <button class="home">HOME</button>
-        <button class="quest">QUESTIONÁRIO</button>
-        <button class="trap">TRAP</button>
+        <button class="btn-home" onclick="window.location.href='index.html'">HOME</button>
+        <button class="btn-quest" onclick="window.location.href='questionario.html'">QUESTIONÁRIO</button>
+        <button class="btn-trap" onclick="window.location.href='dashboard/dashboard.html'">TRAP</button>
     </div>
 
     <div class="nav-right">
-        <button class="loginB" onclick="window.location.href='login.html'">Login</button>
-        <button class="cadastroB" onclick="window.location.href='cadastro.html'">Cadastro</button>
+        <button class="btn-login" onclick="window.location.href='login.html'">Login</button>
+        <button class="btn-cadastro" onclick="window.location.href='cadastro.html'">Cadastro</button>
     </div>
 </nav>
 
-<div class="login">
-    <div class="alerta_erro">
-        <div class="card_erro" id="cardErro">
-            <span id="mensagem_erro"></span>
-        </div>
+<div class="alerta_erro">
+    <div class="card_erro" id="cardErro">
+        <span id="mensagem_erro"></span>
     </div>
+</div>
 
-    <div class="container">
-        <div class="card card-login">
-            <h2>Olá de volta!</h2>
+<div class="login">
+    <div class="card-login">
+        <h2>Olá de volta!</h2>
 
-            <div class="formulario">
-                <div class="campo">
-                    <span>E-mail:</span>
-                    <input id="email_input" type="text" placeholder="Login">
-                </div>
-
-                <div class="campo">
-                    <span>Senha:</span>
-                    <input id="senha_input" type="password" placeholder="******">
-                </div>
-
-                <button class="botao" onclick="entrar()">Entrar</button>
-            </div>
-
-            <div id="div_aguardar" class="loading-div">
-                <img src="./assets/circle-loading.gif">
-            </div>
-
-            <div id="div_erros_login"></div>
+        <div class="campo">
+            <span>E-mail:</span>
+            <input id="email_input" type="email" placeholder="meuemail@provedor.com">
         </div>
+
+        <div class="campo">
+            <span>Senha:</span>
+            <input id="senha_input" type="password" placeholder="******">
+        </div>
+
+        <button class="botao" onclick="entrar()">Entrar</button>
+
+        <div id="div_aguardar" class="loading-div">
+            <img src="./assets/circle-loading.gif">
+        </div>
+
+        <div id="div_erros_login"></div>
+
+        <p class="link-cadastro">
+            Não tem conta? <a href="cadastro.html">Cadastre-se</a>
+        </p>
     </div>
 </div>
 
 <div class="footer">
-    <div class="container">
-        <h4>2026 doubleM — Moda & Música</h4>
-    </div>
+    2026 doubleM — Moda & Música
 </div>
 
 </body>
@@ -247,12 +289,12 @@ function entrar() {
     var senhaVar = senha_input.value;
 
     if (emailVar == "" || senhaVar == "") {
-        cardErro.style.display = "block"
-        mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Preencha todos os campos!";
         finalizarAguardar();
         return false;
     } else {
-        setInterval(sumirMensagem, 5000)
+        setInterval(sumirMensagem, 5000);
     }
 
     fetch("/usuarios/autenticar", {
@@ -267,31 +309,33 @@ function entrar() {
     }).then(function (resposta) {
 
         if (resposta.ok) {
-            resposta.json().then(json => {
+            resposta.json().then(function(json) {
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.NOME_USUARIO = json.nome;
                 sessionStorage.GENERO_MUSICAL_USUARIO = json.generoMusical;
                 sessionStorage.ID_USUARIO = json.id;
 
                 setTimeout(function () {
-                    window.location = "./public/questionario.html";
+                    window.location = "./questionario.html";
                 }, 1000);
             });
 
         } else {
-            resposta.text().then(texto => {
+            resposta.text().then(function(texto) {
                 finalizarAguardar(texto);
             });
         }
 
     }).catch(function (erro) {
         console.log(erro);
-    })
+        finalizarAguardar("Erro de conexão. Tente novamente.");
+    });
 
     return false;
 }
 
 function sumirMensagem() {
-    cardErro.style.display = "none"
+    cardErro.style.display = "none";
 }
+
 </script>

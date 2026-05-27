@@ -46,7 +46,31 @@ function cadastrar(req, res) {
     }
 }
 
+function buscarEstatisticas(req, res) {
+    Promise.all([
+        questionarioModel.buscarEstatisticasPerfil(),
+        questionarioModel.buscarEstatisticasEstiloRoupa(),
+        questionarioModel.buscarEstatisticasHorario(),
+        questionarioModel.buscarEstatisticasCompatibilidade(),
+        questionarioModel.buscarEstatisticasGeneroMusical(),
+        questionarioModel.buscarTotalRespostas()
+    ]).then(function (resultados) {
+        res.status(200).json({
+            perfis: resultados[0],
+            estilosRoupa: resultados[1],
+            horarios: resultados[2],
+            compatibilidades: resultados[3],
+            generosMusical: resultados[4],
+            totalRespostas: resultados[5][0].total
+        });
+    }).catch(function (erro) {
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     buscarPorUsuario,
-    cadastrar
+    cadastrar,
+    buscarEstatisticas
 };

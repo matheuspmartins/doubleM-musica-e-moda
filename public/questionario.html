@@ -11,12 +11,14 @@
 
 <link rel="icon" href="./assets/icon/favicon2.ico">
 
+<link rel="stylesheet" href="css/questionario.css">
+
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
-    
+
 <nav>
     <div class="nav-left" onclick="window.location.href='index.html'">doubleM</div>
 
@@ -416,7 +418,6 @@ function anterior() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Calcula perfil com base nas perguntas 1-9 (A/B/C/D)
 function calcularPerfil() {
     var contagem = { A: 0, B: 0, C: 0, D: 0 };
 
@@ -426,6 +427,7 @@ function calcularPerfil() {
             contagem[resp]++;
         }
     }
+
 
     var maior = 'A';
     var maiorValor = contagem['A'];
@@ -453,7 +455,7 @@ function finalizar() {
     var perfil = calcularPerfil();
     var idUsuario = sessionStorage.ID_USUARIO;
 
-    // Respostas das perguntas analytics
+    // Respostas das perguntas
     var compatibilidade = respostas[10] || '';
     var horario = respostas[11] || '';
     var estiloRoupa = respostas[12] || '';
@@ -475,7 +477,7 @@ function finalizar() {
         })
     }).then(function (resposta) {
 
-        // Salva na sessão para uso na dashboard
+        // salva na sessão pra usar na dashboard
         sessionStorage.PERFIL_USUARIO = perfil;
         sessionStorage.COMPATIBILIDADE_USUARIO = compatibilidade;
         sessionStorage.HORARIO_USUARIO = horario;
@@ -487,7 +489,7 @@ function finalizar() {
 
     }).catch(function (erro) {
         console.log(erro);
-        // Mesmo com erro, salva na sessão e redireciona
+        
         sessionStorage.PERFIL_USUARIO = perfil;
         sessionStorage.COMPATIBILIDADE_USUARIO = compatibilidade;
         sessionStorage.HORARIO_USUARIO = horario;

@@ -1,364 +1,480 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doubleM | Dashboard</title>
 
-<title>doubleM | Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="../js/sessao.js"></script>
+    <link rel="icon" href="../assets/icon/favicon2.ico">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="dashStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="dashStyle.css">
 </head>
-
 <body>
+    
+    <nav class="dash-nav">
+        <div class="nav-left" onclick="window.location.href='../index.html'">doubleM</div>
+        
+        <div class="nav-center">
+            <button class="btn-home" onclick="window.location.href='../index.html'">HOME</button>
+            <button class="btn-quest" onclick="window.location.href='../questionario.html'">QUESTIONÁRIO</button>
+            <button class="btn-dash" onclick="mostrarAba('sorteio')">DASHBOARD</button>
+        </div>
 
-<header class="dash-header">
+        <div class="nav-right">
+            <div class="user-card">
+                <span class="user-nome" id="spanNomeUsuario">Usuário</span>
+                <span class="user-divisor">|</span>
+                <span class="user-musica" id="spanGenMusical_usuario">...</span>
+            </div>
+            <button class="btn-logout" onclick="limparSessao()">Sair</button>
+        </div>
+    </nav>
+
+<!-- header da dashboard -->
+ <header class="dash-header">
     <div>
-        <h1 class="dash-title">doubleM - Análise o estilo, som e comportamento do mundo ao seu redor</h1>
+        <h1 class="dash-title">doubleM - Analise o estilo, som e comportamento</h1>
         <p class="dash-subtitle">Resultados de todas as pessoas</p>
     </div>
+    <div class="badge-user" id="badgeTotalRespostas">Carregando...</div>
+ </header>
 
-    <div class="header-right">
-        <div class="user-box">
-        <span class="user-name" id="spanNomeUsuario">Usuário</span>
-        <span class="user-divider">•</span>
-        <span class="user-music" id="spanGeneroUsuario">Trap</span>
-        </div>
-        <div class="badge-user">
-            1.248 respostas registradas
-        </div>
+ <div class="tabs-bar">
+    <button class="tab-btn ativo" id="btn-geral" onclick="mostrarAba('geral')">Visão Geral</button>
+    <button class="tab-btn" id="btn-perfil" onclick="mostrarAba('perfil')">Meu Perfil</button>
+    <button class="tab-btn" id="btn-sorteio" onclick="mostrarAba('sorteio')">Sorteio</button>
+</div>
 
-        <button class="btn-logout">Sair</button>
-    </div>
-</header>
+ <div class="aba-conteudo">
+ <main class="dashboard-container">
 
-<main class="dashboard-container">
-
-    <!-- CARDS -->
-    <section class="stats-grid">
-
-        <div class="stat-card">
-            <span class="stat-label">Estilo mais popular</span>
-            <h2>Streetwear</h2>
-            <p>41% dos usuários</p>
+    <section class="kpi-grid">
+        <div class="kpi-card">
+            <span class="kpi-span">Estilo mais popular</span>
+            <h2 id="kpiEstiloPop">-</h2>
+            <p id="kpiEstiloPorc">Carregando...</p>
         </div>
 
-        <div class="stat-card">
-            <span class="stat-label">Gênero mais ouvido</span>
-            <h2>Trap</h2>
-            <p>62% das respostas</p>
+        <div class="kpi-card">
+            <span class="kpi-span">Gênero mais ouvido</span>
+            <h2 id="kpiGeneroPop">-</h2>
+            <p id="kpiGeneroPorc">Carregando...</p>
         </div>
 
-        <div class="stat-card">
-            <span class="stat-label">Maior compatibilidade</span>
-            <h2>92%</h2>
-            <p>Usuários satisfeitos com recomendações</p>
+        <div class="kpi-card">
+            <span class="kpi-span">Alta compatibilidade estilo/música</span>
+            <h2 id="kpiCompatPop">-</h2>
+            <p id="kpiCompatPorc">declararam que combinam muito</p>
         </div>
 
-        <div class="stat-card">
-            <span class="stat-label">Outfits recomendados</span>
-            <h2>3.482</h2>
-            <p>Looks gerados automaticamente</p>
+        <div class="kpi-card">
+            <span class="kpi-span">Total de respostas</span>
+            <h2 id="kpiTotal">-</h2>
+            <p>questionários respondidos</p>
         </div>
 
     </section>
 
-
+<!--Gráfico 1-->
     <section class="charts-grid-2">
 
         <div class="chart-card large-card">
             <div class="card-top">
                 <h3>Estilos de roupa mais usados</h3>
             </div>
-
             <canvas id="chartEstilos"></canvas>
         </div>
 
+ <!--Gráfico 2-->
 
         <div class="chart-card">
             <div class="card-top">
                 <h3>Gêneros musicais favoritos</h3>
             </div>
-
             <canvas id="chartGeneros"></canvas>
         </div>
 
     </section>
 
+<!--Gráfico 3-->
+
     <section class="charts-grid-2">
 
         <div class="chart-card">
             <div class="card-top">
-                <h3>Traps mais recomendados</h3>
+                <h3>Perfis mais comuns</h3>
             </div>
-
-            <canvas id="chartTraps"></canvas>
+            <canvas id="chartPerfis"></canvas>
         </div>
 
+<!--Gráfico 4-->
 
         <div class="chart-card">
             <div class="card-top">
-                <h3>Resultados positivos</h3>
-            </div>
-
-            <canvas id="chartResultados"></canvas>
-        </div>
-
-    </section>
-
-    <section class="bottom-grid">
-
-        <div class="chart-card heat-card">
-            <div class="card-top">
                 <h3>Horários em que mais ouvem música</h3>
             </div>
-
-            <canvas id="chartHorario"></canvas>
-        </div>
-
-
-        <div class="quote-card">
-            <span class="quote-mark">“</span>
-
-            <p>
-                Seu estilo fala antes mesmo da sua música tocar.
-            </p>
-
-            <span class="quote-author">
-                doubleM
-            </span>
+            <canvas id="chartHorarios"></canvas>
         </div>
 
     </section>
 
-</main>
+<!--Gráfico 5-->
+        <section class="bottom-grid">
 
+        <div class="chart-card">
+            <div class="card-top">
+                <h3>Compatibilidade entre estilo e música</h3>
+            </div>
+            <canvas id="chartCompatibilidade"></canvas>
+        </div>
+
+         <div class="frase-card">
+            <p>"As ondas sonoras das músicas definem a frequência do seu estilo"</p>
+            <span>doubleM</span>
+        </div>
+
+ </main>
+ </div>
+
+ <!--Aba de perfil-->
+ <div class="aba-conteudo" id="aba-perfil" style="display:none;">
+<main class="dashboard-container">
+
+    <section class="perfil-section">
+        <div class="perfil-header">
+            <h2>Seu resultado</h2>
+            <p class="perfil-sub">Com base nas suas respostas do questionário</p>
+        </div>
+
+        <div id="perfil-carregando" class="perfil-loading">
+            <img src="../assets/circle-loading.gif" width="50">
+            <p>Carregando seu perfil...</p>
+        </div>
+
+        <div id="perfil-sem-dados" class="perfil-aviso" style="display:none;">
+            <p>Você ainda não respondeu o questionário.</p>
+            <a href="../questionario.html" class="btn-ir-quest">Responder agora →</a>
+        </div>
+
+        <div id="perfil-dados" class="perfil-cards-grid" style="display:none;">
+
+            <div class="perfil-card perfil-destaque">
+                <span class="perfil-label">Perfil</span>
+                <h2 id="perfilResultado">—</h2>
+            </div>
+
+            <div class="perfil-card">
+                <span class="perfil-label">Estilo de roupa</span>
+                <h3 id="perfilEstiloRoupa">—</h3>
+            </div>
+
+            <div class="perfil-card">
+                <span class="perfil-label">Horário favorito de música</span>
+                <h3 id="perfilHorario">-</h3>
+            </div>
+
+            <div class="perfil-card">
+                <span class="perfil-label">Compatibilidade estilo/música</span>
+                <h3 id="perfilCompatibilidade">-</h3>
+            </div>
+
+            <div class="perfil-card">
+                <span class="perfil-label">Gênero musical</span>
+                <h3 id="perfilGeneroMusical">-</h3>
+            </div>
+
+            <div class="perfil-card">
+                <span class="perfil-label">Data de resposta</span>
+                <h3 id="perfilData">-</h3>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="charts-grid-2"></section>
+
+</main>
+</div>
+</body>
 <script>
 
-    const nomeUsuario = sessionStorage.NOME_USUARIO;
-    const generoMusical = sessionStorage.GENERO_MUSICAL_USUARIO;
+// Verifica sessão
+validarSessao();
 
-if(nomeUsuario != undefined){
+// Preenche dados do usuário no header
+var nomeUsuario = sessionStorage.NOME_USUARIO;
+var generoMusical = sessionStorage.GENERO_MUSICAL_USUARIO;
+var idUsuario = sessionStorage.ID_USUARIO;
+
+if (nomeUsuario != undefined) {
     document.getElementById("spanNomeUsuario").innerHTML = nomeUsuario;
 }
 
-if(generoMusical != undefined){
-    document.getElementById("spanGeneroUsuario").innerHTML = generoMusical;
+if (generoMusical != undefined) {
+    document.getElementById("spanGenMusical_usuario").innerHTML = generoMusical;
 }
 
 Chart.defaults.font.family = 'Poppins';
 Chart.defaults.color = '#6b7280';
 
+function mostrarAba(aba) {
+    var abas = document.querySelectorAll('.aba-conteudo');
+    for (var i = 0; i < abas.length; i++) {
+        abas[i].style.display = 'none';
+    }
 
-// ESTILOS DE ROUPA
-new Chart(document.getElementById('chartEstilos'), {
-    type: 'bar',
-    data: {
-        labels: [
-            'Streetwear',
-            'Old Money',
-            'Minimalista',
-            'Y2K',
-            'Techwear'
-        ],
-        datasets: [{
-            label: 'Usuários',
-            data: [412, 281, 194, 168, 123],
-            backgroundColor: [
-                '#7c3aed',
-                '#8b5cf6',
-                '#a78bfa',
-                '#c4b5fd',
-                '#ddd6fe'
-            ],
-            borderRadius: 10
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false
+    var btns = document.querySelectorAll('.tab-btn');
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.remove('ativo');
+    }
+
+    document.getElementById('aba-' + aba).style.display = 'block';
+    document.getElementById('btn-' + aba).classList.add('ativo');
+
+    // Carrega dados ao abrir aba de perfil
+    if (aba === 'perfil') {
+        carregarPerfilUsuario();
+    }
+}
+
+function obterDados() {
+    fetch('/questionarios/estatisticas', { cache: 'no-store' })
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    console.log(`Dados recebidos: ${JSON.stringify(data)}`);
+                    
+                    preencherCards(data);
+                    plotarGraficoEstilos(data.estilosRoupa);
+                    plotarGraficoGeneros(data.generosMusical);
+                    plotarGraficoPerfis(data.perfis);
+                    plotarGraficoHorarios(data.horarios);
+                    plotarGraficoCompatibilidade(data.compatibilidades);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
             }
+        })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+
+function preencherCards(data) {
+    var total = data.totalRespostas || 0;
+    document.getElementById("kpiTotal").innerHTML = total;
+    document.getElementById("badgeTotalRespostas").innerHTML = total + " respostas registradas";
+
+    // Pegando o estilo mais popular
+    if (data.estilosRoupa && data.estilosRoupa.length > 0) {
+        var estiloPop = data.estilosRoupa[0];
+        var maiorEstilo = estiloPop;
+        for (var i = 1; i < data.estilosRoupa.length; i++) {
+            if (data.estilosRoupa[i].total > maiorEstilo.total) {
+                maiorEstilo = data.estilosRoupa[i];
+            }
+        }
+        document.getElementById("kpiEstiloPop").innerHTML = maiorEstilo.estilo_roupa || "—";
+        var porc = total > 0 ? Math.round((maiorEstilo.total / total) * 100) : 0;
+        document.getElementById("kpiEstiloPorc").innerHTML = porc + "% dos usuários";
+    }
+    
+    // pegndo o gênero mais ouvido
+    if (data.generosMusical && data.generosMusical.length > 0) {
+        var maiorGenero = data.generosMusical[0];
+        for (var i = 1; i < data.generosMusical.length; i++) {
+            if (data.generosMusical[i].total > maiorGenero.total) {
+                maiorGenero = data.generosMusical[i];
+            }
+        }
+        document.getElementById("kpiGeneroPop").innerHTML = maiorGenero.genero_musical || "—";
+        var totalUsuarios = 0;
+        for (var i = 0; i < data.generosMusical.length; i++) {
+            totalUsuarios += parseInt(data.generosMusical[i].total);
+        }
+        var porcGenero = totalUsuarios > 0 ? Math.round((maiorGenero.total / totalUsuarios) * 100) : 0;
+        document.getElementById("kpiGeneroPorc").innerHTML = porcGenero + "% das respostas";
+    }
+
+    // vendo a compatibilidade
+    if (data.compatibilidades && data.compatibilidades.length > 0) {
+        var muitoCount = 0;
+        for (var i = 0; i < data.compatibilidades.length; i++) {
+            if (data.compatibilidades[i].compatibilidade_estilo === 'Muito') {
+                muitoCount = data.compatibilidades[i].total;
+            }
+        }
+        var porcMuito = total > 0 ? Math.round((muitoCount / total) * 100) : 0;
+        document.getElementById("kpiCompatPop").innerHTML = porcMuito + "%";
+    }
+}
+
+    function plotarGraficoEstilos(dados) {
+    var labels = [];
+    var valores = [];
+
+    for (var i = 0; i < dados.length; i++) {
+        labels.push(dados[i].estilo_roupa);
+        valores.push(dados[i].total);
+    }
+
+    var ctx = document.getElementById('chartEstilos').getContext('2d');
+        new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Usuários',
+                data: valores,
+                backgroundColor: [
+                    '#e47616',
+                    '#FF8C00',
+                    '#FF5E0E',
+                    '#E26310',
+                    '#FF6347'
+                ],
+                borderRadius: 10
+            }]
         },
-        scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    color: '#f1f5f9'
-                }
-            },
-            x: {
-                grid: {
-                    display: false
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#f1f5f9' }
                 }
             }
         }
+    });
+}
+
+    function plotarGraficoGeneros(dados) {
+    var labels = [];
+    var valores = [];
+
+    for (var i = 0; i < dados.length; i++) {
+       labels.push(dados[i].genero_musical);
+        valores.push(dados[i].total);
     }
-});
 
-
-// GENEROS MUSICAIS
-new Chart(document.getElementById('chartGeneros'), {
-    type: 'doughnut',
-    data: {
-        labels: [
-            'Trap',
-            'Funk',
-            'Rap',
-            'R&B',
-            'Indie'
-        ],
-        datasets: [{
-            data: [62, 18, 10, 6, 4],
-            backgroundColor: [
-                '#7c3aed',
-                '#ec4899',
-                '#0ea5e9',
-                '#f59e0b',
-                '#10b981'
-            ],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        cutout: '70%',
-        plugins: {
-            legend: {
-                position: 'bottom'
-            }
-        }
-    }
-});
-
-
-// TRAPS MAIS RECOMENDADOS
-new Chart(document.getElementById('chartTraps'), {
-    type: 'bar',
-    data: {
-        labels: [
-            'Máquina do Tempo',
-            'M4',
-            'FE!N',
-            'Conexões',
-            'Coração de Gelo'
-        ],
-        datasets: [{
-            label: 'Recomendações',
-            data: [312, 281, 247, 210, 198],
-            backgroundColor: '#7c3aed',
-            borderRadius: 10
-        }]
-    },
-    options: {
-        indexAxis: 'y',
-        plugins: {
-            legend: {
-                display: false
-            }
+    var ctx = document.getElementById('chartGeneros').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: valores,
+                backgroundColor:[
+                    '#efeecc', '#fe8b05', '#fe0557',
+        '#400403', '#0aabba', '#9fb982',
+        '#8b5cf6', '#b0da09'
+                ],
+                borderWidth: 0
+            }]
         },
-        scales: {
-            x: {
-                grid: {
-                    color: '#f3f4f6'
-                }
-            },
-            y: {
-                grid: {
-                    display: false
-                }
+        options: {
+            cutout: '20%',
+            plugins: {
+                legend: { position: 'bottom' }
             }
         }
+    });
+}
+
+    function plotarGraficoPerfis(dados) {
+    var labels = [];
+    var valores = [];
+
+    for (var i = 0; i < dados.length; i++) {
+        labels.push(dados[i].perfil_resultado);
+        valores.push(dados[i].total);
     }
-});
 
-
-// RESULTADOS POSITIVOS
-new Chart(document.getElementById('chartResultados'), {
-    type: 'line',
-    data: {
-        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-        datasets: [{
-            label: 'Satisfação dos usuários',
-            data: [61, 68, 73, 79, 88, 92],
-            borderColor: '#7c3aed',
-            backgroundColor: 'rgba(124,58,237,0.1)',
-            fill: true,
-            tension: 0.4
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
+    var ctx = document.getElementById('chartPerfis').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Pessoas',
+                data: valores,
+                backgroundColor: '#7c3aed',
+                borderRadius: 8
+            }]
         },
-        scales: {
-            y: {
-                beginAtZero: true,
-                max: 100,
-                grid: {
-                    color: '#f3f4f6'
-                }
+        options: {
+            indexAxis: 'y',
+            plugins: {
+                legend: { display: false }
             },
-            x: {
-                grid: {
-                    display: false
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: { color: '#f3f4f6' }
+                },
+                y: {
+                    grid: { display: false }
                 }
             }
         }
-    }
-});
+    });
+}
 
+    function plotarGraficoHorarios(dados) {
+    var ordemHorarios = ['Manha', 'Tarde', 'Noite', 'Madrugada'];
+    var tradHorarios = { 'Manha': 'Manhã', 'Tarde': 'Tarde', 'Noite': 'Noite', 'Madrugada': 'Madrugada' };
+    var labels = [];
+    var valores = [];
 
-// HORARIOS
-new Chart(document.getElementById('chartHorario'), {
-    type: 'line',
-    data: {
-        labels: [
-            '08h',
-            '10h',
-            '12h',
-            '14h',
-            '16h',
-            '18h',
-            '20h',
-            '22h'
-        ],
-        datasets: [{
-            label: 'Respostas',
-            data: [21, 39, 54, 73, 88, 120, 148, 101],
-            borderColor: '#8b5cf6',
-            backgroundColor: 'rgba(139,92,246,0.12)',
-            fill: true,
-            tension: 0.4
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
+    for (var i = 0; i < ordemHorarios.length; i++) {
+        var atual = ordemHorarios[i];
+        var encontrado = false;
+        for (var j = 0; j < dados.length; j++) {
+            if (dados[j].horario_musica === atual) {
+                labels.push(tradHorarios[atual]);
+                valores.push(dados[j].total);
+                encontrado = true;
+                break;
             }
+        }
+        if (!encontrado) {
+            labels.push(tradHorarios[atual]);
+            valores.push(0);
+        }
+    }
+
+    var ctx = document.getElementById('chartHorarios').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Respostas',
+                data: valores,
+                borderColor: '#e47616',
+                backgroundColor: '#e47616',
+                tension: 0.3
+            }]
         },
-        scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    color: '#f3f4f6'
-                }
+        options: {
+            plugins: {
+                legend: { display: false }
             },
-            x: {
-                grid: {
-                    display: false
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
         }
-    }
-});
+    });
+}
+
+    obterDados();
+
+    
 
 </script>
-
-</body>
 </html>

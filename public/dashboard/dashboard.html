@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,16 +9,19 @@
     <script src="../js/sessao.js"></script>
     <link rel="icon" href="../assets/icon/favicon2.ico">
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="dashStyle.css">
 </head>
+
 <body>
-    
+
     <nav class="dash-nav">
         <div class="nav-left" onclick="window.location.href='../index.html'">doubleM</div>
-        
+
         <div class="nav-center">
             <button class="btn-home" onclick="window.location.href='../index.html'">HOME</button>
             <button class="btn-quest" onclick="window.location.href='../questionario.html'">QUESTIONÁRIO</button>
@@ -34,447 +38,599 @@
         </div>
     </nav>
 
-<!-- header da dashboard -->
- <header class="dash-header">
-    <div>
-        <h1 class="dash-title">doubleM - Analise o estilo, som e comportamento</h1>
-        <p class="dash-subtitle">Resultados de todas as pessoas</p>
+    <!-- header da dashboard -->
+    <header class="dash-header">
+        <div>
+            <h1 class="dash-title">doubleM - Analise o estilo, som e comportamento</h1>
+            <p class="dash-subtitle">Resultados de todas as pessoas</p>
+        </div>
+        <div class="badge-user" id="badgeTotalRespostas">Carregando...</div>
+    </header>
+
+    <div class="tabs-bar">
+        <button class="tab-btn ativo" id="btn-geral" onclick="mostrarAba('geral')">Visão Geral</button>
+        <button class="tab-btn" id="btn-perfil" onclick="mostrarAba('perfil')">Meu Perfil</button>
+        <button class="tab-btn" id="btn-sorteio" onclick="mostrarAba('sorteio')">Sorteio</button>
     </div>
-    <div class="badge-user" id="badgeTotalRespostas">Carregando...</div>
- </header>
 
- <div class="tabs-bar">
-    <button class="tab-btn ativo" id="btn-geral" onclick="mostrarAba('geral')">Visão Geral</button>
-    <button class="tab-btn" id="btn-perfil" onclick="mostrarAba('perfil')">Meu Perfil</button>
-    <button class="tab-btn" id="btn-sorteio" onclick="mostrarAba('sorteio')">Sorteio</button>
-</div>
+    <div class="aba-conteudo" id="aba-geral">
+        <main class="dashboard-container">
 
- <div class="aba-conteudo">
- <main class="dashboard-container">
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <span class="kpi-span">Estilo mais popular</span>
+                    <h2 id="kpiEstiloPop">-</h2>
+                    <p id="kpiEstiloPorc">Carregando...</p>
+                </div>
 
-    <section class="kpi-grid">
-        <div class="kpi-card">
-            <span class="kpi-span">Estilo mais popular</span>
-            <h2 id="kpiEstiloPop">-</h2>
-            <p id="kpiEstiloPorc">Carregando...</p>
-        </div>
+                <div class="kpi-card">
+                    <span class="kpi-span">Gênero mais ouvido</span>
+                    <h2 id="kpiGeneroPop">-</h2>
+                    <p id="kpiGeneroPorc">Carregando...</p>
+                </div>
 
-        <div class="kpi-card">
-            <span class="kpi-span">Gênero mais ouvido</span>
-            <h2 id="kpiGeneroPop">-</h2>
-            <p id="kpiGeneroPorc">Carregando...</p>
-        </div>
+                <div class="kpi-card">
+                    <span class="kpi-span">Alta compatibilidade estilo/música</span>
+                    <h2 id="kpiCompatPop">-</h2>
+                    <p id="kpiCompatPorc">declararam que combinam muito</p>
+                </div>
 
-        <div class="kpi-card">
-            <span class="kpi-span">Alta compatibilidade estilo/música</span>
-            <h2 id="kpiCompatPop">-</h2>
-            <p id="kpiCompatPorc">declararam que combinam muito</p>
-        </div>
+                <div class="kpi-card">
+                    <span class="kpi-span">Total de respostas</span>
+                    <h2 id="kpiTotal">-</h2>
+                    <p>questionários respondidos</p>
+                </div>
 
-        <div class="kpi-card">
-            <span class="kpi-span">Total de respostas</span>
-            <h2 id="kpiTotal">-</h2>
-            <p>questionários respondidos</p>
-        </div>
+            </section>
 
-    </section>
+            <!--Gráfico 1-->
+            <section class="charts-grid-2">
 
-<!--Gráfico 1-->
-    <section class="charts-grid-2">
+                <div class="chart-card div-chart1">
+                    <div class="card-titulo-chart">
+                        <h3>Estilos de roupa mais usados</h3>
+                    </div>
+                    <canvas id="chartEstilos"></canvas>
+                </div>
 
-        <div class="chart-card large-card">
-            <div class="card-top">
-                <h3>Estilos de roupa mais usados</h3>
-            </div>
-            <canvas id="chartEstilos"></canvas>
-        </div>
+                <!--Gráfico 2-->
 
- <!--Gráfico 2-->
+                <div class="chart-card">
+                    <div class="card-titulo-chart">
+                        <h3>Gêneros musicais favoritos</h3>
+                    </div>
+                    <canvas id="chartGeneros"></canvas>
+                </div>
 
-        <div class="chart-card">
-            <div class="card-top">
-                <h3>Gêneros musicais favoritos</h3>
-            </div>
-            <canvas id="chartGeneros"></canvas>
-        </div>
+            </section>
 
-    </section>
+            <!--Gráfico 3-->
 
-<!--Gráfico 3-->
+            <section class="charts-grid-2">
 
-    <section class="charts-grid-2">
+                <div class="chart-card">
+                    <div class="card-titulo-chart">
+                        <h3>Perfis mais comuns</h3>
+                    </div>
+                    <canvas id="chartPerfis"></canvas>
+                </div>
 
-        <div class="chart-card">
-            <div class="card-top">
-                <h3>Perfis mais comuns</h3>
-            </div>
-            <canvas id="chartPerfis"></canvas>
-        </div>
+                <!--Gráfico 4-->
 
-<!--Gráfico 4-->
+                <div class="chart-card">
+                    <div class="card-titulo-chart">
+                        <h3>Horários em que mais ouvem música</h3>
+                    </div>
+                    <canvas id="chartHorarios"></canvas>
+                </div>
 
-        <div class="chart-card">
-            <div class="card-top">
-                <h3>Horários em que mais ouvem música</h3>
-            </div>
-            <canvas id="chartHorarios"></canvas>
-        </div>
+            </section>
 
-    </section>
-
-<!--Gráfico 5-->
-        <section class="bottom-grid">
-
-        <div class="chart-card">
-            <div class="card-top">
-                <h3>Compatibilidade entre estilo e música</h3>
-            </div>
-            <canvas id="chartCompatibilidade"></canvas>
-        </div>
-
-         <div class="frase-card">
+            <div class="frase-card">
             <p>"As ondas sonoras das músicas definem a frequência do seu estilo"</p>
             <span>doubleM</span>
+            </div>
         </div>
 
- </main>
- </div>
+        </main>
+    </div>
 
- <!--Aba de perfil-->
- <div class="aba-conteudo" id="aba-perfil" style="display:none;">
+    <!--Aba de perfil-->
+    <div class="aba-conteudo" id="aba-perfil" style="display:none;">
+        <main class="dashboard-container">
+
+            <section class="perfil-section">
+                <div class="perfil-header">
+                    <h2>Seu resultado</h2>
+                    <p class="perfil-sub">Com base nas suas respostas do questionário</p>
+                </div>
+
+                <div id="perfil-carregando" class="perfil-loading">
+                    <img src="../assets/circle-loading.gif" width="50">
+                    <p>Carregando seu perfil...</p>
+                </div>
+
+                <div id="perfil-sem-dados" class="perfil-aviso" style="display:none;">
+                    <p>Você ainda não respondeu o questionário.</p>
+                    <a href="../questionario.html" class="btn-ir-quest">Responder agora →</a>
+                </div>
+
+                <div id="perfil-dados" class="perfil-cards-grid" style="display:none;">
+
+                    <div class="perfil-card perfil-destaque">
+                        <span class="perfil-label">Perfil</span>
+                        <h3 id="perfilResultado">—</h3>
+                    </div>
+                    
+                    <div class="perfil-card">
+                        <span class="perfil-label">Estilo de roupa</span>
+                        <h3 id="perfilEstiloRoupa">—</h3>
+                    </div>
+
+                    <div class="perfil-card">
+                        <span class="perfil-label">Horário favorito de música</span>
+                        <h3 id="perfilHorario">-</h3>
+                    </div>
+
+                    <div class="perfil-card">
+                        <span class="perfil-label">Compatibilidade estilo/música</span>
+                        <h3 id="perfilCompatibilidade">-</h3>
+                    </div>
+
+                    <div class="perfil-card">
+                        <span class="perfil-label">Gênero musical</span>
+                        <h3 id="perfilGeneroMusical">-</h3>
+                    </div>
+
+                    <div class="perfil-card">
+                        <span class="perfil-label">Data de resposta</span>
+                        <h3 id="perfilData">-</h3>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="aba-conteudo" id="aba-sorteio" style="display:none;">
 <main class="dashboard-container">
 
-    <section class="perfil-section">
-        <div class="perfil-header">
-            <h2>Seu resultado</h2>
-            <p class="perfil-sub">Com base nas suas respostas do questionário</p>
+    <section class="sorteio-section">
+
+        <div class="sorteio-header">
+            <h2>Sorteio de trap e estilo recomendados</h2>
+            <p>Baseado no seu perfil, sorteamos um trap e um estilo de roupa pra você</p>
         </div>
 
-        <div id="perfil-carregando" class="perfil-loading">
-            <img src="../assets/circle-loading.gif" width="50">
-            <p>Carregando seu perfil...</p>
-        </div>
+        <button class="btn-sortear" onclick="sortear()">Sortear</button>
 
-        <div id="perfil-sem-dados" class="perfil-aviso" style="display:none;">
-            <p>Você ainda não respondeu o questionário.</p>
-            <a href="../questionario.html" class="btn-ir-quest">Responder agora →</a>
-        </div>
+        <div class="sorteio-cards" id="cards-sorteio" style="display:none;">
 
-        <div id="perfil-dados" class="perfil-cards-grid" style="display:none;">
-
-            <div class="perfil-card perfil-destaque">
-                <span class="perfil-label">Perfil</span>
-                <h2 id="perfilResultado">—</h2>
+            <div class="sorteio-card sorteio-trap">
+                <span class="sorteio-span">Trap recomendado</span>
+                <h2 id="trap-resultado">-</h2>
+                <p class="sorteio-p">Baseado no seu perfil doubleM</p>
             </div>
 
-            <div class="perfil-card">
-                <span class="perfil-label">Estilo de roupa</span>
-                <h3 id="perfilEstiloRoupa">—</h3>
-            </div>
-
-            <div class="perfil-card">
-                <span class="perfil-label">Horário favorito de música</span>
-                <h3 id="perfilHorario">-</h3>
-            </div>
-
-            <div class="perfil-card">
-                <span class="perfil-label">Compatibilidade estilo/música</span>
-                <h3 id="perfilCompatibilidade">-</h3>
-            </div>
-
-            <div class="perfil-card">
-                <span class="perfil-label">Gênero musical</span>
-                <h3 id="perfilGeneroMusical">-</h3>
-            </div>
-
-            <div class="perfil-card">
-                <span class="perfil-label">Data de resposta</span>
-                <h3 id="perfilData">-</h3>
+            <div class="sorteio-card sorteio-outfit">
+                <span class="sorteio-span">Estilo de roupa recomendado</span>
+                <h2 id="outfit-resultado">-</h2>
+                <p class="sorteio-p">Baseado no seu estilo de moda</p>
             </div>
 
         </div>
+
+        <button class="btn-sortear-novamente" id="btn-novo-sorteio" onclick="sortear()" style="display:none;">Novo sorteio</button>
+
     </section>
-
-    <section class="charts-grid-2"></section>
 
 </main>
 </div>
 </body>
 <script>
 
-// Verifica sessão
-validarSessao();
+    // Verifica sessão
+    validarSessao();
 
-// Preenche dados do usuário no header
-var nomeUsuario = sessionStorage.NOME_USUARIO;
-var generoMusical = sessionStorage.GENERO_MUSICAL_USUARIO;
-var idUsuario = sessionStorage.ID_USUARIO;
+    // pega dados do usuário salvos
+    var nomeUsuario = sessionStorage.NOME_USUARIO;
+    var generoMusical = sessionStorage.GENERO_MUSICAL_USUARIO;
+    var idUsuario = sessionStorage.ID_USUARIO;
 
-if (nomeUsuario != undefined) {
-    document.getElementById("spanNomeUsuario").innerHTML = nomeUsuario;
-}
-
-if (generoMusical != undefined) {
-    document.getElementById("spanGenMusical_usuario").innerHTML = generoMusical;
-}
-
-Chart.defaults.font.family = 'Poppins';
-Chart.defaults.color = '#6b7280';
-
-function mostrarAba(aba) {
-    var abas = document.querySelectorAll('.aba-conteudo');
-    for (var i = 0; i < abas.length; i++) {
-        abas[i].style.display = 'none';
+    if (nomeUsuario != undefined) {
+        document.getElementById("spanNomeUsuario").innerHTML = nomeUsuario;
     }
 
-    var btns = document.querySelectorAll('.tab-btn');
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].classList.remove('ativo');
+    if (generoMusical != undefined) {
+        document.getElementById("spanGenMusical_usuario").innerHTML = generoMusical;
     }
 
-    document.getElementById('aba-' + aba).style.display = 'block';
-    document.getElementById('btn-' + aba).classList.add('ativo');
+    Chart.defaults.font.family = 'Poppins';
+    Chart.defaults.color = '#6b7280';
 
-    // Carrega dados ao abrir aba de perfil
-    if (aba === 'perfil') {
-        carregarPerfilUsuario();
-    }
-}
-
-function obterDados() {
-    fetch('/questionarios/estatisticas', { cache: 'no-store' })
-        .then(function (response) {
-            if (response.ok) {
-                response.json().then(function (data) {
-                    console.log(`Dados recebidos: ${JSON.stringify(data)}`);
-                    
-                    preencherCards(data);
-                    plotarGraficoEstilos(data.estilosRoupa);
-                    plotarGraficoGeneros(data.generosMusical);
-                    plotarGraficoPerfis(data.perfis);
-                    plotarGraficoHorarios(data.horarios);
-                    plotarGraficoCompatibilidade(data.compatibilidades);
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
-
-function preencherCards(data) {
-    var total = data.totalRespostas || 0;
-    document.getElementById("kpiTotal").innerHTML = total;
-    document.getElementById("badgeTotalRespostas").innerHTML = total + " respostas registradas";
-
-    // Pegando o estilo mais popular
-    if (data.estilosRoupa && data.estilosRoupa.length > 0) {
-        var estiloPop = data.estilosRoupa[0];
-        var maiorEstilo = estiloPop;
-        for (var i = 1; i < data.estilosRoupa.length; i++) {
-            if (data.estilosRoupa[i].total > maiorEstilo.total) {
-                maiorEstilo = data.estilosRoupa[i];
-            }
+    function mostrarAba(aba) {
+        var abas = document.querySelectorAll('.aba-conteudo');
+        for (var i = 0; i < abas.length; i++) {
+            abas[i].style.display = 'none';
         }
-        document.getElementById("kpiEstiloPop").innerHTML = maiorEstilo.estilo_roupa || "—";
-        var porc = total > 0 ? Math.round((maiorEstilo.total / total) * 100) : 0;
-        document.getElementById("kpiEstiloPorc").innerHTML = porc + "% dos usuários";
-    }
-    
-    // pegndo o gênero mais ouvido
-    if (data.generosMusical && data.generosMusical.length > 0) {
-        var maiorGenero = data.generosMusical[0];
-        for (var i = 1; i < data.generosMusical.length; i++) {
-            if (data.generosMusical[i].total > maiorGenero.total) {
-                maiorGenero = data.generosMusical[i];
-            }
+
+        var btns = document.querySelectorAll('.tab-btn');
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].classList.remove('ativo');
         }
-        document.getElementById("kpiGeneroPop").innerHTML = maiorGenero.genero_musical || "—";
-        var totalUsuarios = 0;
-        for (var i = 0; i < data.generosMusical.length; i++) {
-            totalUsuarios += parseInt(data.generosMusical[i].total);
+
+        document.getElementById('aba-' + aba).style.display = 'block';
+        document.getElementById('btn-' + aba).classList.add('ativo');
+
+        // Carrega dados ao abrir aba de perfil
+        if (aba === 'perfil') {
+            carregarPerfilUsuario();
         }
-        var porcGenero = totalUsuarios > 0 ? Math.round((maiorGenero.total / totalUsuarios) * 100) : 0;
-        document.getElementById("kpiGeneroPorc").innerHTML = porcGenero + "% das respostas";
     }
 
-    // vendo a compatibilidade
-    if (data.compatibilidades && data.compatibilidades.length > 0) {
-        var muitoCount = 0;
-        for (var i = 0; i < data.compatibilidades.length; i++) {
-            if (data.compatibilidades[i].compatibilidade_estilo === 'Muito') {
-                muitoCount = data.compatibilidades[i].total;
-            }
-        }
-        var porcMuito = total > 0 ? Math.round((muitoCount / total) * 100) : 0;
-        document.getElementById("kpiCompatPop").innerHTML = porcMuito + "%";
+    function obterDados() {
+        fetch('/questionarios/estatisticas', { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (data) {
+                        console.log(`Dados recebidos: ${JSON.stringify(data)}`);
+
+                        preencherCards(data);
+                        plotarGraficoEstilos(data.estilosRoupa);
+                        plotarGraficoGeneros(data.generosMusical);
+                        plotarGraficoPerfis(data.perfis);
+                        plotarGraficoHorarios(data.horarios);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
     }
-}
+
+    function preencherCards(data) {
+        var total = data.totalRespostas || 0;
+        document.getElementById("kpiTotal").innerHTML = total;
+        document.getElementById("badgeTotalRespostas").innerHTML = total + " respostas registradas";
+
+        // Pegando o estilo mais popular
+        if (data.estilosRoupa && data.estilosRoupa.length > 0) {
+            var estiloPop = data.estilosRoupa[0];
+            var maiorEstilo = estiloPop;
+            for (var i = 1; i < data.estilosRoupa.length; i++) {
+                if (data.estilosRoupa[i].total > maiorEstilo.total) {
+                    maiorEstilo = data.estilosRoupa[i];
+                }
+            }
+            document.getElementById("kpiEstiloPop").innerHTML = maiorEstilo.estilo_roupa || "—";
+            var porc = total > 0 ? Math.round((maiorEstilo.total / total) * 100) : 0;
+            document.getElementById("kpiEstiloPorc").innerHTML = porc + "% dos usuários";
+        }
+
+        // pegndo o gênero mais ouvido
+        if (data.generosMusical && data.generosMusical.length > 0) {
+            var maiorGenero = data.generosMusical[0];
+            for (var i = 1; i < data.generosMusical.length; i++) {
+                if (data.generosMusical[i].total > maiorGenero.total) {
+                    maiorGenero = data.generosMusical[i];
+                }
+            }
+            document.getElementById("kpiGeneroPop").innerHTML = maiorGenero.genero_musical || "—";
+            var totalUsuarios = 0;
+            for (var i = 0; i < data.generosMusical.length; i++) {
+                totalUsuarios += parseInt(data.generosMusical[i].total);
+            }
+            var porcGenero = totalUsuarios > 0 ? Math.round((maiorGenero.total / totalUsuarios) * 100) : 0;
+            document.getElementById("kpiGeneroPorc").innerHTML = porcGenero + "% das respostas";
+        }
+
+        // vendo a compatibilidade
+        if (data.compatibilidades && data.compatibilidades.length > 0) {
+            var muitoCount = 0;
+            for (var i = 0; i < data.compatibilidades.length; i++) {
+                if (data.compatibilidades[i].compatibilidade_estilo === 'Muito') {
+                    muitoCount = data.compatibilidades[i].total;
+                }
+            }
+            var porcMuito = total > 0 ? Math.round((muitoCount / total) * 100) : 0;
+            document.getElementById("kpiCompatPop").innerHTML = porcMuito + "%";
+        }
+    }
 
     function plotarGraficoEstilos(dados) {
-    var labels = [];
-    var valores = [];
+        var labels = [];
+        var valores = [];
 
-    for (var i = 0; i < dados.length; i++) {
-        labels.push(dados[i].estilo_roupa);
-        valores.push(dados[i].total);
-    }
+        for (var i = 0; i < dados.length; i++) {
+            labels.push(dados[i].estilo_roupa);
+            valores.push(dados[i].total);
+        }
 
-    var ctx = document.getElementById('chartEstilos').getContext('2d');
+        var ctx = document.getElementById('chartEstilos').getContext('2d');
         new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Usuários',
-                data: valores,
-                backgroundColor: [
-                    '#e47616',
-                    '#FF8C00',
-                    '#FF5E0E',
-                    '#E26310',
-                    '#FF6347'
-                ],
-                borderRadius: 10
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: '#f1f5f9' }
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Usuários',
+                    data: valores,
+                    backgroundColor: [
+                        '#e47616',
+                        '#FF8C00',
+                        '#FF5E0E',
+                        '#E26310',
+                        '#FF6347'
+                    ],
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f1f5f9' }
+                    }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
     function plotarGraficoGeneros(dados) {
-    var labels = [];
-    var valores = [];
+        var labels = [];
+        var valores = [];
 
-    for (var i = 0; i < dados.length; i++) {
-       labels.push(dados[i].genero_musical);
-        valores.push(dados[i].total);
-    }
-
-    var ctx = document.getElementById('chartGeneros').getContext('2d');
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: valores,
-                backgroundColor:[
-                    '#efeecc', '#fe8b05', '#fe0557',
-        '#400403', '#0aabba', '#9fb982',
-        '#8b5cf6', '#b0da09'
-                ],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            cutout: '20%',
-            plugins: {
-                legend: { position: 'bottom' }
-            }
+        for (var i = 0; i < dados.length; i++) {
+            labels.push(dados[i].genero_musical);
+            valores.push(dados[i].total);
         }
-    });
-}
+
+        var ctx = document.getElementById('chartGeneros').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: valores,
+                    backgroundColor: [
+                        '#efeecc', '#fe8b05', '#fe0557',
+                        '#400403', '#0aabba', '#9fb982',
+                        '#8b5cf6', '#b0da09'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                cutout: '20%',
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    }
 
     function plotarGraficoPerfis(dados) {
-    var labels = [];
-    var valores = [];
+        var labels = [];
+        var valores = [];
 
-    for (var i = 0; i < dados.length; i++) {
-        labels.push(dados[i].perfil_resultado);
-        valores.push(dados[i].total);
-    }
+        for (var i = 0; i < dados.length; i++) {
+            labels.push(dados[i].perfil_resultado);
+            valores.push(dados[i].total);
+        }
 
-    var ctx = document.getElementById('chartPerfis').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Pessoas',
-                data: valores,
-                backgroundColor: '#7c3aed',
-                borderRadius: 8
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            plugins: {
-                legend: { display: false }
+        var ctx = document.getElementById('chartPerfis').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Pessoas',
+                    data: valores,
+                    backgroundColor: '#e69e5f',
+                    borderRadius: 8
+                }]
             },
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    grid: { color: '#f3f4f6' }
+            options: {
+                indexAxis: 'y',
+                plugins: {
+                    legend: { display: false }
                 },
-                y: {
-                    grid: { display: false }
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: { color: '#f3f4f6' }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
     function plotarGraficoHorarios(dados) {
-    var ordemHorarios = ['Manha', 'Tarde', 'Noite', 'Madrugada'];
-    var tradHorarios = { 'Manha': 'Manhã', 'Tarde': 'Tarde', 'Noite': 'Noite', 'Madrugada': 'Madrugada' };
-    var labels = [];
-    var valores = [];
+        var ordemHorarios = ['Manha', 'Tarde', 'Noite', 'Madrugada'];
+        var tradHorarios = { 'Manha': 'Manhã', 'Tarde': 'Tarde', 'Noite': 'Noite', 'Madrugada': 'Madrugada' };
+        var labels = [];
+        var valores = [];
 
-    for (var i = 0; i < ordemHorarios.length; i++) {
-        var atual = ordemHorarios[i];
-        var encontrado = false;
-        for (var j = 0; j < dados.length; j++) {
-            if (dados[j].horario_musica === atual) {
-                labels.push(tradHorarios[atual]);
-                valores.push(dados[j].total);
-                encontrado = true;
-                break;
-            }
-        }
-        if (!encontrado) {
-            labels.push(tradHorarios[atual]);
-            valores.push(0);
-        }
-    }
-
-    var ctx = document.getElementById('chartHorarios').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Respostas',
-                data: valores,
-                borderColor: '#e47616',
-                backgroundColor: '#e47616',
-                tension: 0.3
-            }]
-        },
-        options: {
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
+        for (var i = 0; i < ordemHorarios.length; i++) {
+            var atual = ordemHorarios[i];
+            var encontrado = false;
+            for (var j = 0; j < dados.length; j++) {
+                if (dados[j].horario_musica === atual) {
+                    labels.push(tradHorarios[atual]);
+                    valores.push(dados[j].total);
+                    encontrado = true;
+                    break;
                 }
             }
+            if (!encontrado) {
+                labels.push(tradHorarios[atual]);
+                valores.push(0);
+            }
         }
-    });
-}
+
+        var ctx = document.getElementById('chartHorarios').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Respostas',
+                    data: valores,
+                    borderColor: '#e47616',
+                    backgroundColor: '#e47616',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
 
     obterDados();
 
+    function carregarPerfilUsuario() {
+
+        if (!idUsuario) {
+            document.getElementById("perfil-carregando").style.display = "none";
+            document.getElementById("perfil-sem-dados").style.display = "block";
+            return;
+        }
+
+        fetch('/questionarios/' + idUsuario)
+            .then(function (response) {
+
+                if (response.status == 204 || response.status == 404) {
+                    return [];
+                }
+
+                return response.json();
+            })
+            .then(function (dados) {
+
+                document.getElementById("perfil-carregando").style.display = "none";
+
+                if (dados.length == 0) {
+                    document.getElementById("perfil-sem-dados").style.display = "block";
+                    return;
+                }
+
+                var q = dados[0];
+
+                document.getElementById("perfilResultado").innerHTML =
+                    q.perfil_resultado || "—";
+
+                document.getElementById("perfilEstiloRoupa").innerHTML =
+                    q.estilo_roupa || "—";
+
+                document.getElementById("perfilHorario").innerHTML =
+                    q.horario_musica || "—";
+
+                document.getElementById("perfilCompatibilidade").innerHTML =
+                    q.compatibilidade_estilo || "—";
+
+                document.getElementById("perfilGeneroMusical").innerHTML =
+                    generoMusical || "—";
+
+                document.getElementById("perfilData").innerHTML =
+                    q.data_resposta || "—";
+
+                document.getElementById("perfil-dados").style.display = "grid";
+
+                sessionStorage.PERFIL_USUARIO =
+                    q.perfil_resultado;
+
+                sessionStorage.ESTILO_ROUPA_USUARIO =
+                    q.estilo_roupa;
+
+            })
+            .catch(function (erro) {
+
+                console.log(erro);
+
+                document.getElementById("perfil-carregando").style.display = "none";
+
+                document.getElementById("perfil-sem-dados").style.display = "block";
+
+            });
+    }
+
+    var trapsPorPerfil = {
+    'Minimalista': [
+        'Ninguém é Perfeito - Rudies Flacko', 'Reparou Bem - Bradockdan', 'Adios - luangelus', 'Antes - Dessiiik', 'Keisha II - chromeattaxk'
+    ],
+    'Equilibrado': [
+        'Máquina do Tempo - Matuê', 'Amor de Fim de Noite - Orochi', 'Timeless - The Weeknd', 'Equilíbrio', 'Kit Exclusivo - Tchelo'
+    ],
+    'Influente e Estiloso': [
+        'Fashion - Mavyrmldy', 'FE!N - Travis Scott', 'Swagmusic - Phl Noturnboy', 'Takin Swag - Nine Vicious', 'Honda - Jovem Dex'
+    ],
+    'Experimental/Autêntico': [
+        'Owens - Costabilekidd', 'Vila Menck, Osasco - Emitê', 'Prêmio Multishow - Ryu, The Runner', 'Fluid - Redda', 'FOMDJ - Playboi Carti'
+    ]
+};
+
+var outfitsPorEstilo = {
+    'Streetwear': [
+        'Moletom oversized, tênis de skate com boné reto',
+        'Camiseta oversized estampada, calça cargo, Air Force',
+        'Hoodie cropped, shorts baggy e meia alta'
+    ],
+    'OldMoney': [
+        'Blazer bege, calça de alfaiataria e mocassim',
+        'Polo branca com bermuda de linho e loafer',
+        'Ralph Lauren quarter zip + calça slim + oxford'
+    ],
+    'Minimalista': [
+        'Camiseta branca, jeans reta preta com tênis branco',
+        'Camiseta nike dry-fit com slides preto',
+        'Camiseta justa preta com jeans preta e cinto cinza'
+    ],
+    'Y2K': [
+        'Calça flare estampada de estrelas com camiseta box + óculos Y2K',
+        'Jorts baggy cinza com hoodie full zip, touca estampada',
+        'Botas, calça baggy, baby tee'
+    ]
+};
+
+    function sortear() {
+    var perfil = sessionStorage.PERFIL_USUARIO || 'Equilibrado';
+    var estiloRoupa = sessionStorage.ESTILO_ROUPA_USUARIO || 'Streetwear';
+
+    var traps = trapsPorPerfil[perfil];
+    if (!traps) {
+        traps = trapsPorPerfil['Equilibrado'];
+    }
+
+    var outfits = outfitsPorEstilo[estiloRoupa];
+    if (!outfits) {
+        outfits = outfitsPorEstilo['Streetwear'];
+    }
+
+    // Sorteio
+    var trapSorteado = traps[Math.floor(Math.random() * traps.length)];
+    var outfitSorteado = outfits[Math.floor(Math.random() * outfits.length)];
+    console.log(trapSorteado);
     
 
+    document.getElementById('trap-resultado').innerHTML = trapSorteado;
+    document.getElementById('outfit-resultado').innerHTML = outfitSorteado;
+
+    document.getElementById('cards-sorteio').style.display = 'grid';
+    document.getElementById('btn-novo-sorteio').style.display = 'inline-block';
+}
+
 </script>
+
 </html>

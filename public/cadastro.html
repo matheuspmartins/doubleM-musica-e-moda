@@ -352,7 +352,7 @@ function cadastrar() {
         if (c >= 'A' && c <= 'Z') { temMaiuscula = true; }
     }
 
-    if (senhaVar.length < 6 || !temNumero || !temMaiuscula) {
+    if (senhaVar.length < 4 || !temNumero || !temMaiuscula) {
         cardErro.style.display = "block";
         mensagem_erro.innerHTML = "Senha inválida! Use pelo menos 6 caracteres, 1 número e 1 letra maiúscula.";
         return false;
